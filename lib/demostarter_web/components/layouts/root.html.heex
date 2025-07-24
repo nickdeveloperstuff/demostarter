@@ -32,6 +32,45 @@
     </script>
   </head>
   <body>
-    {@inner_content}
+    <div class="app-scroll-container" id="app-root">
+      {@inner_content}
+    </div>
+    
+    <script>
+      // Failsafe: Prevent any horizontal scrolling
+      (function() {
+        // Reset horizontal scroll if it somehow occurs
+        let preventHorizontal = function() {
+          if (window.scrollX !== 0) {
+            window.scrollTo(0, window.scrollY);
+          }
+        };
+        
+        // Monitor scroll events
+        window.addEventListener('scroll', preventHorizontal, { passive: true });
+        window.addEventListener('load', preventHorizontal);
+        
+        // Prevent horizontal swipe on touch devices
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        document.addEventListener('touchstart', function(e) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', function(e) {
+          let touchEndX = e.touches[0].clientX;
+          let touchEndY = e.touches[0].clientY;
+          let diffX = Math.abs(touchStartX - touchEndX);
+          let diffY = Math.abs(touchStartY - touchEndY);
+          
+          // If horizontal movement is greater than vertical, prevent it
+          if (diffX > diffY && diffX > 10) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+      })();
+    </script>
   </body>
 </html>
