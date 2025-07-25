@@ -46,7 +46,7 @@ defmodule DemostarterWeb.Test.BasicLayoutLive do
         <div class="bg-base-200 p-6 rounded">
           <p class="mb-4">This section contains enough content to test vertical scrolling.</p>
           <%= for i <- 1..20 do %>
-            <p class="mb-2">Line <%= i %>: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p class="mb-2">Line {i}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           <% end %>
         </div>
       </section>

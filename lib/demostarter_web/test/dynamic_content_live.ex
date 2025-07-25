@@ -81,7 +81,7 @@ defmodule DemostarterWeb.Test.DynamicContentLive do
           This page tests that layout constraints are maintained during LiveView updates.
         </p>
         <p class="text-sm">
-          Auto-update counter: <span class="font-bold"><%= @counter %></span> (updates every 3 seconds)
+          Auto-update counter: <span class="font-bold">{@counter}</span> (updates every 3 seconds)
         </p>
       </div>
       
@@ -122,11 +122,11 @@ defmodule DemostarterWeb.Test.DynamicContentLive do
       
     <!-- Dynamic Grid -->
       <section class="mb-8">
-        <h2 class="text-xl font-semibold mb-4">Dynamic Grid (Currently <%= @grid_columns %> columns)</h2>
+        <h2 class="text-xl font-semibold mb-4">Dynamic Grid (Currently {@grid_columns} columns)</h2>
         <div class={"grid gap-4 grid-cols-#{@grid_columns}"}>
           <%= for item <- @items do %>
             <div class={"bg-#{item.color} text-#{item.color}-content p-4 rounded relative group"}>
-              <p class="mb-2"><%= item.content %></p>
+              <p class="mb-2">{item.content}</p>
               <button
                 phx-click="remove_item"
                 phx-value-id={item.id}
@@ -134,7 +134,7 @@ defmodule DemostarterWeb.Test.DynamicContentLive do
               >
                 ×
               </button>
-              <div class="text-xs opacity-75">ID: <%= item.id %></div>
+              <div class="text-xs opacity-75">ID: {item.id}</div>
             </div>
           <% end %>
         </div>
@@ -157,14 +157,14 @@ defmodule DemostarterWeb.Test.DynamicContentLive do
             <tbody>
               <%= for item <- @items do %>
                 <tr>
-                  <td><%= item.id %></td>
-                  <td><%= item.content %></td>
+                  <td>{item.id}</td>
+                  <td>{item.content}</td>
                   <td>
                     <span class={"badge badge-#{item.color}"}>
-                      <%= item.color %>
+                      {item.color}
                     </span>
                   </td>
-                  <td><%= DateTime.utc_now() |> DateTime.to_string() %></td>
+                  <td>{DateTime.utc_now() |> DateTime.to_string()}</td>
                   <td>
                     <button
                       phx-click="remove_item"

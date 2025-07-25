@@ -1,37 +1,109 @@
 ####!!ALL AVAILABLE UI COMPONENTS -- THIS PROJECT SHOULD ONLY USE THE BELOW UI COMPONENTS!! DO NOT ATTEMPT TO CREATE ORIGINAL COMPONENTS OR ATTEMPT TO IMPORT ANY OTHER COMPONENT LIBRARIES.!!####
 
-## There are two main types of UI components in this project: 1--Core Phoenix Liveview Functional Components For Functional UI Stuff that requires forms, state, errors, etc. that need to be tightly integrated with business logic and data; and  2--The DaisyUI Components Available below are the most comprehensive and are the rest of the UI components available for use in this project.
+## Lego Brick Philosophy
+
+These components are **building blocks** for creating complete UI features and pages. Use them exactly as documented with **zero modifications** - no custom styling, no business logic, just standard implementation with natural styling inheritance.
+
+**Visual Reference:** See all components in action at `/ui-components` - this is your definitive visual validation tool.
+
+## Component Hierarchy & Usage Priority
+
+1. **DaisyUI Components** - Primary choice for most UI elements (buttons, cards, navbars, etc.)
+2. **Phoenix LiveView Components** - For functional components requiring forms, state, errors, navigation
+3. **Ash Authentication Components** - Specifically for auth pages only
+
+## Implementation Standards
+
+- **Phoenix Components:** Use `<.component>` syntax with proper attributes
+- **DaisyUI Components:** Use standard HTML + CSS classes exactly as documented  
+- **Natural Inheritance:** Let existing app.css and root.html.heex handle all styling
+- **Dummy Data:** Use minimal, realistic sample data ("John Doe", "Sample Text", etc.)
+- **No Business Logic:** Keep all UI implementations purely visual
 
 ## Icons for Whole Project
 **From:** Heroicons library
 
 
-##1--Core Phoenix Liveview Functional Components For Functional UI Stuff
+## 1. Core Phoenix LiveView Functional Components
 
-**Location:** `lib/<your_app>/components/core_components.ex`
+**Location:** `lib/demostarter_web/components/core_components.ex`
 
-- `<.flash>` - Flash notifications
-- `<.button>` - Interactive buttons  
+### Implementation Examples
+
+```heex
+<!-- Flash Messages -->
+<.flash kind={:info}>This is an info message</.flash>
+<.flash kind={:error}>This is an error message</.flash>
+
+<!-- Buttons -->
+<.button>Default Button</.button>
+<.button variant="primary">Primary Button</.button>
+
+<!-- Form Input -->
+<.input name="username" label="Username" value="sample_user" />
+
+<!-- Page Header -->
+<.header>Sample Page Title</.header>
+
+<!-- Data Table -->
+<.table id="users-table" rows={[%{name: "John Doe", email: "john@example.com"}]}>
+  <:col :let={user} label="Name">{user.name}</:col>
+  <:col :let={user} label="Email">{user.email}</:col>
+</.table>
+
+<!-- List -->
+<.list>
+  <:item title="Item 1">Description for item 1</:item>
+  <:item title="Item 2">Description for item 2</:item>
+</.list>
+
+<!-- Icons -->
+<.icon name="hero-home" class="w-6 h-6" />
+<.icon name="hero-user" class="w-6 h-6" />
+<.icon name="hero-star" class="w-6 h-6" />
+```
+
+### Available Components
+- `<.flash>` - Flash notifications (info/error variants)
+- `<.button>` - Interactive buttons (default/primary variants)
 - `<.input>` - Form inputs with labels/errors
 - `<.header>` - Page headers
-- `<.table>` - Data tables
-- `<.list>` - Data lists
-- `<.icon>` - Heroicons
+- `<.table>` - Data tables with columns
+- `<.list>` - Data lists with items
+- `<.icon>` - Heroicons with `hero-*` naming
 
 
 
-Usage: `<.icon name="hero-x-mark">` syntax
+## 2. DaisyUI Components Available
 
+These are your primary building blocks for most UI elements. Use standard HTML structure with DaisyUI CSS classes exactly as documented.
 
+### Implementation Examples
 
-##2-- DaisyUI Components Available
+```html
+<!-- Basic Button -->
+<button class="btn">Button</button>
+<button class="btn btn-primary">Primary</button>
 
-This document lists all DaisyUI components that are currently installed and available for use in this project.
+<!-- Card -->
+<div class="card w-96 bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">Sample Card</h2>
+    <p>Sample content here</p>
+    <div class="card-actions justify-end">
+      <button class="btn btn-primary">Action</button>
+    </div>
+  </div>
+</div>
 
-## Component Location
-All components are available in the vendor files:
-- `assets/vendor/daisyui.js` 
-- `assets/vendor/daisyui-theme.js`
+<!-- Form Input -->
+<input type="text" placeholder="Sample input" class="input input-bordered w-full max-w-xs" />
+
+<!-- Alert -->
+<div class="alert alert-info">
+  <span>Sample alert message</span>
+</div>
+```
 
 ## Layout Components
 - **Artboard** - Device mockups - `/saadeghi/daisyui`
@@ -153,17 +225,40 @@ Each component includes multiple customization options:
 </dialog>
 ```
 
-### For Other Stuff in Project##
+## 3. Specialized Components
 
-## Auth Components for Main Auth Page
-**From:** ash_authentication_phoenix
+### Auth Components (ash_authentication_phoenix)
+**Use only for authentication pages**
 
 - `AshAuthentication.Phoenix.Components.SignIn` - Sign-in forms
 - `AshAuthentication.Phoenix.Components.Password.RegisterForm` - Registration
 - `AshAuthentication.Phoenix.Components.Reset` - Password reset
 - `AshAuthentication.Phoenix.Components.OAuth2` - OAuth authentication
 
-## Admin UI Route Components
-**From:** ash_admin
+### Admin Components (ash_admin)
+**Use only for admin routes**
 
 - `AshAdmin.CoreComponents` - Admin UI elements
+
+## Dummy Data Patterns
+
+When building UI mockups, use these consistent dummy data patterns:
+
+- **Names:** "John Doe", "Jane Smith", "Alex Johnson"
+- **Emails:** "john@example.com", "jane@example.com"
+- **Content:** "Sample text", "Demo content", "Example description"
+- **Numbers:** Round numbers like 100, 250, 1000
+- **Dates:** "2024-01-15", "March 15, 2024"
+- **Status:** "Active", "Pending", "Completed"
+
+## Building Complete UI Features
+
+Combine these components as building blocks:
+
+1. **Start with layout** (DaisyUI cards, heroes, dividers)
+2. **Add navigation** (DaisyUI menus, breadcrumbs, tabs)
+3. **Include data display** (Phoenix tables/lists or DaisyUI stats)
+4. **Add interactions** (DaisyUI buttons, modals, forms)
+5. **Provide feedback** (Phoenix flash or DaisyUI alerts)
+
+**Remember:** Use `/ui-components` to see all components visually before building your UI features.

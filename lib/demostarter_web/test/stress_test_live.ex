@@ -50,7 +50,7 @@ defmodule DemostarterWeb.Test.StressTestLive do
               <%= for i <- 1..5 do %>
                 <tr>
                   <%= for j <- 1..15 do %>
-                    <td>Cell <%= i %>-<%= j %> with content</td>
+                    <td>Cell {i}-{j} with content</td>
                   <% end %>
                 </tr>
               <% end %>
