@@ -1,4 +1,4 @@
-# Demostarter
+## Demostarter
 
 To start your Phoenix server:
 
