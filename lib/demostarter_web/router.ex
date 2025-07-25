@@ -42,6 +42,7 @@ defmodule DemostarterWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/ui-components", UiComponentsLive
     auth_routes AuthController, Demostarter.Accounts.User, path: "/auth"
     sign_out_route AuthController
 
