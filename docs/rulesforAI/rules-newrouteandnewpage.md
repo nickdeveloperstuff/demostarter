@@ -20,14 +20,29 @@
 3. **Create LiveView**: Add new file in `lib/demostarter_web/live/`
 4. **Test**: Visit the new route
 
-## Step 1: Check Documentation First
+## Naming Convention
 
-Before creating anything, use Context7 to get current examples:
+**Route to Module Name Pattern:**
+- Route: `/demo-ui-dashboard` → Module: `DemoUiDashboardLive`  
+- Route: `/user-settings` → Module: `UserSettingsLive`
+- Route: `/admin/reports` → Module: `AdminReportsLive`
+
+**Rules:**
+- Convert kebab-case route segments to PascalCase
+- Add "Live" suffix
+- Remove slashes and join segments
+- File path: `lib/demostarter_web/live/demo_ui_dashboard_live.ex`
+
+## Step 1: Check Existing Code Patterns
+
+Before creating anything, examine the current project structure:
+- Check `lib/demostarter_web/router.ex` for routing patterns
+- Look at existing LiveView files in `lib/demostarter_web/live/`
+- Note the authentication setup and scope organization
+
+If you need additional examples beyond what's in the project, use Context7:
 - Search `/phoenixframework/phoenix_live_view` for "routing" 
 - Search `/ash-project/ash` for "authentication routing"
-- Search `/team-alembic/ash_authentication` for auth patterns
-
-This ensures your code matches the exact library versions in this project.
 
 ## Step 2: Add Route to Router
 
@@ -49,11 +64,31 @@ live "/your-path", YourLive
 
 Create new file in `lib/demostarter_web/live/` directory:
 
+### For PUBLIC pages (no login required):
 ```elixir
 defmodule DemostarterWeb.YourLive do
   use DemostarterWeb, :live_view
   
-  # For PRIVATE pages, add this:
+  def mount(_params, _session, socket) do
+    {:ok, socket}
+  end
+  
+  def render(assigns) do
+    ~H"""
+    <div class="p-8">
+      <h1>Placeholder Page</h1>
+      <p>Replace this with actual content later.</p>
+    </div>
+    """
+  end
+end
+```
+
+### For PRIVATE pages (login required):
+```elixir
+defmodule DemostarterWeb.YourLive do
+  use DemostarterWeb, :live_view
+  
   on_mount {DemostarterWeb.LiveUserAuth, :live_user_required}
   
   def mount(_params, _session, socket) do
@@ -99,9 +134,14 @@ This happens automatically via `root.html.heex` and APP.CSS - no setup needed, A
 
 ## Testing Your Route
 
-1. Start server: `mix phx.server`
-2. Visit: `http://localhost:4000/your-path`
-3. Verify authentication works as expected
+1. **Compile**: Run `mix compile` to check for syntax errors
+2. **Start server**: `mix phx.server` (usually already running at localhost:4000)
+3. **Visit route**: `http://localhost:4000/your-path`
+4. **Verify**: 
+   - Page loads successfully
+   - Shows your placeholder content
+   - Authentication works as expected (redirects for private routes)
+   - No browser console errors
 
 ## Remember
 

@@ -43,6 +43,7 @@ defmodule DemostarterWeb.Router do
 
     get "/", PageController, :home
     live "/ui-components", UiComponentsLive
+    live "/demo-ui-dashboard", DemoUiDashboardLive
     auth_routes AuthController, Demostarter.Accounts.User, path: "/auth"
     sign_out_route AuthController
 
