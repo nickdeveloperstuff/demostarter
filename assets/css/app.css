@@ -179,17 +179,60 @@ html, body {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+/* For pages that want snap scrolling, wrap content in snap-container-wrapper */
+.snap-container-wrapper {
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100vw;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  overscroll-behavior-y: contain; /* Prevent pull-to-refresh interference */
+  position: relative; /* Establish positioning context */
+}
+
+/* Disable scroll on parent when snap container is active */
+.app-scroll-container:has(.snap-container-wrapper) {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Mobile-specific snap scrolling adjustments */
+@media (hover: none) and (pointer: coarse) {
+  .snap-container-wrapper {
+    /* Use proximity on mobile for better UX */
+    scroll-snap-type: y proximity !important;
+  }
   
-  /* Enable snap scrolling (proximity = optional snap points) */
-  scroll-snap-type: y proximity;
+  /* Ensure snap sections work properly on mobile */
+  .snap-section {
+    /* Use dynamic viewport height on mobile */
+    height: 100vh;
+    height: 100dvh;
+    min-height: -webkit-fill-available; /* iOS fallback */
+  }
+}
+
+/* Additional mobile targeting */
+@media (max-width: 768px) {
+  .snap-container-wrapper {
+    scroll-snap-type: y proximity !important;
+  }
 }
 
 /* Make sections snap-ready (developers just need to add the class) */
 .snap-section {
   scroll-snap-align: start;
+  scroll-snap-stop: always; /* Force stop at each section */
   min-height: 100vh;
+  height: 100vh;
   width: 100%;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Prevent common horizontal overflow causes */
@@ -207,12 +250,25 @@ table {
   -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
+/* Ensure table containers also handle overflow properly */
+.overflow-x-auto {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Code blocks should wrap or scroll within their container */
 pre, code {
   max-width: 100%;
   overflow-x: auto;
   word-wrap: break-word;
   white-space: pre-wrap;
+}
+
+/* Handle long unbreakable text */
+p, div, span, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 /* Responsive flex/grid defaults */

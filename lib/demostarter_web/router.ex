@@ -74,6 +74,17 @@ defmodule DemostarterWeb.Router do
     )
   end
 
+  # Layout system test routes
+  scope "/test-layout", DemostarterWeb.Test do
+    pipe_through :browser
+
+    live "/basic", BasicLayoutLive
+    live "/snap", SnapScrollingLive
+    live "/stress", StressTestLive
+    live "/dynamic", DynamicContentLive
+    live "/inheritance", InheritanceTestLive
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", DemostarterWeb do
   #   pipe_through :api
