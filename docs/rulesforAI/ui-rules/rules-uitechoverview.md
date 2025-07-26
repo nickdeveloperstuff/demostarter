@@ -98,8 +98,37 @@ The project uses a sophisticated Heroicons integration that converts SVG files i
 - **JavaScript Output**: `priv/static/assets/js/`
 - **Heroicons Plugin**: `assets/vendor/heroicons.js`
 
+## Enhanced Design System
+
+Building on the DaisyUI foundation, we've integrated SUPERDESIGN principles:
+
+### Typography System
+- **Google Fonts**: Inter (sans), JetBrains Mono (mono), Merriweather (serif)
+- **Font Size Scale**: 8 sizes from 12px to 36px
+- **Typography Hierarchy**: Automated spacing and line-height
+
+### Animation System
+- **Standard Timing**: 0.2s ease for all transitions
+- **Hover Patterns**: Lift, scale, shadow enhancements
+- **Keyframe Animations**: Pulse, spin, slide effects
+
+### Shadow System
+- **8 Shadow Levels**: From 2xs to 2xl
+- **Modern Style**: Subtle, layered shadows
+- **Consistent Application**: Via CSS variables
+
+### Enhanced CSS Variables
+- **Typography**: Font families and sizes
+- **Shadows**: 8-level shadow system
+- **Extended Colors**: Component-specific colors
+- **Semantic Spacing**: Both numeric and semantic names
+
 ## Related Documentation
 
 - `rules-uiavailablecomponents.md` - Complete catalog of building block components
-- `rules-overalluirules.md` - Rules for composing components into complete UI features  
+- `rules-overalluirules.md` - Rules for composing components into complete UI features
+- `rules-typography.md` - Typography system and hierarchy
+- `rules-animations.md` - Animation and transition standards
+- `rules-shadows.md` - Shadow system documentation
+- `rules-design-system.md` - Complete design system reference
 - **Live Reference:** `/ui-components` - Visual showcase of all components in action

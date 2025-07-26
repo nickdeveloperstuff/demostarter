@@ -105,6 +105,61 @@
   --spacing-8: 2rem;
   --spacing-12: 3rem;
   --spacing-16: 4rem;
+  
+  /* Keep existing spacing but add semantic aliases */
+  --spacing-xs: var(--spacing-1);   /* 0.25rem */
+  --spacing-sm: var(--spacing-2);   /* 0.5rem */
+  --spacing-md: var(--spacing-3);   /* 0.75rem */
+  --spacing-lg: var(--spacing-4);   /* 1rem */
+  --spacing-xl: var(--spacing-6);   /* 1.5rem */
+  --spacing-2xl: var(--spacing-8);  /* 2rem */
+  --spacing-3xl: var(--spacing-12); /* 3rem */
+  
+  /* Add typography variables */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: 'Inter', 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-serif: 'Merriweather', 'Playfair Display', Georgia, serif;
+  
+  /* Font sizes */
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-lg: 1.125rem;  /* 18px */
+  --font-size-xl: 1.25rem;   /* 20px */
+  --font-size-2xl: 1.5rem;   /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem;  /* 36px */
+  
+  /* Shadows - Modern style only for simplicity */
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+  
+  /* Additional component colors mapping to DaisyUI */
+  --color-background: var(--color-base-100);
+  --color-foreground: var(--color-base-content);
+  --color-card: var(--color-base-100);
+  --color-card-foreground: var(--color-base-content);
+  --color-popover: var(--color-base-100);
+  --color-popover-foreground: var(--color-base-content);
+  --color-border: var(--color-base-300);
+  --color-input: var(--color-base-200);
+  --color-ring: var(--color-primary);
+  --color-muted: var(--color-base-200);
+  --color-muted-foreground: var(--color-neutral);
+  
+  /* Chart colors */
+  --color-chart-1: var(--color-primary);
+  --color-chart-2: var(--color-secondary);
+  --color-chart-3: var(--color-accent);
+  --color-chart-4: var(--color-info);
+  --color-chart-5: var(--color-success);
 }
 
 /* Add variants based on LiveView classes */
@@ -296,3 +351,163 @@ main, article, section, aside, nav, header, footer {
   max-width: 100%;
   overflow-x: hidden;
 }
+
+/* =================================================================
+   SUPERDESIGN INTEGRATION - Animation & Enhancement Utilities
+   All visual control happens here in app.css
+   ================================================================= */
+
+/* Base transition utility */
+.transition-all {
+  transition: all 0.2s ease;
+}
+
+.transition-colors {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.transition-transform {
+  transition: transform 0.2s ease;
+}
+
+.transition-shadow {
+  transition: box-shadow 0.2s ease;
+}
+
+/* Hover utilities */
+.hover-lift:hover {
+  transform: translateY(-1px);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-shadow-lg:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Focus utilities */
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.5);
+}
+
+/* Typography utilities */
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+/* Font size utilities */
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-base { font-size: var(--font-size-base); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-2xl { font-size: var(--font-size-2xl); }
+.text-3xl { font-size: var(--font-size-3xl); }
+.text-4xl { font-size: var(--font-size-4xl); }
+
+/* Typography hierarchy */
+h1, .h1 {
+  font-size: var(--font-size-4xl);
+  line-height: 1.2;
+  margin-top: calc(1.2 * var(--spacing-2xl));
+  margin-bottom: var(--spacing-xl);
+  font-weight: 700;
+}
+
+h2, .h2 {
+  font-size: var(--font-size-3xl);
+  line-height: 1.3;
+  margin-top: calc(1.2 * var(--spacing-xl));
+  margin-bottom: var(--spacing-lg);
+  font-weight: 600;
+}
+
+h3, .h3 {
+  font-size: var(--font-size-2xl);
+  line-height: 1.4;
+  margin-top: calc(1.2 * var(--spacing-lg));
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+}
+
+p {
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 0.4; 
+    transform: scale(0.8); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.1); 
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animation classes */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.35s ease-out;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Shadow utilities */
+.shadow-2xs { box-shadow: var(--shadow-2xs); }
+.shadow-xs { box-shadow: var(--shadow-xs); }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow { box-shadow: var(--shadow); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+.shadow-2xl { box-shadow: var(--shadow-2xl); }

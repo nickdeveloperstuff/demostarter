@@ -130,6 +130,42 @@ Build UI features by combining components in this order:
 - [ ] Used consistent dummy data patterns
 - [ ] Built complete functional mockup (not just individual components)
 - [ ] Validated appearance against `/ui-components` reference
+- [ ] Applied SUPERDESIGN enhancements (transitions, hover states, shadows)
+- [ ] Used proper typography hierarchy
+- [ ] Ensured all interactive elements have focus states
+
+---
+
+## Animation & Transition Standards
+- **ALL animations use 0.2s ease timing**
+- **Apply transitions to interactive elements**
+- **Use hover utilities for enhanced interactions**
+- **Focus states must be clearly visible**
+
+### Standard Enhancement Pattern
+```heex
+<!-- DaisyUI component FIRST -->
+<div class="card">
+
+<!-- Add SUPERDESIGN enhancements -->
+<div class="card shadow transition-all hover-lift hover-shadow-lg">
+```
+
+## Typography Standards
+- **Use semantic HTML tags (h1, h2, h3, p)**
+- **Apply font utility classes for specific styles**
+- **Maintain hierarchy with proper spacing**
+- **Minimum body text: 16px**
+
+### Typography Usage
+```heex
+<h1>Main Heading (36px)</h1>
+<h2>Section Heading (30px)</h2>
+<h3>Subsection (24px)</h3>
+<p class="text-lg">Emphasized body text</p>
+<p>Regular body text (16px)</p>
+<p class="text-sm text-muted-foreground">Secondary text</p>
+```
 
 ---
 
@@ -140,26 +176,27 @@ Build UI features by combining components in this order:
 ## Base Unit (u)
 **0.25rem (4px)**. Do not change this.
 
-## Allowed Scale (multipliers of u)
-`0` `0.5` `1` `1.5` `2` `3` `4` `6` `8` `12` `16`
+## Allowed Scale (both numeric and semantic names)
+Numeric: `0` `0.5` `1` `1.5` `2` `3` `4` `6` `8` `12` `16`
+Semantic: `xs` `sm` `md` `lg` `xl` `2xl` `3xl`
 
 ## Tailwind Spacing Tokens
 
-| Token | Value |
-|-------|-------|
-| 0 | 0 |
-| 0.5 | 0.125rem (2px) |
-| 1 | 0.25rem (4px) |
-| 1.5 | 0.375rem (6px) |
-| 2 | 0.5rem (8px) |
-| 3 | 0.75rem (12px) |
-| 4 | 1rem (16px) |
-| 6 | 1.5rem (24px) |
-| 8 | 2rem (32px) |
-| 12 | 3rem (48px) |
-| 16 | 4rem (64px) |
+| Numeric | Semantic | Value |
+|---------|----------|-------|
+| 0 | - | 0 |
+| 0.5 | - | 0.125rem (2px) |
+| 1 | xs | 0.25rem (4px) |
+| 1.5 | - | 0.375rem (6px) |
+| 2 | sm | 0.5rem (8px) |
+| 3 | md | 0.75rem (12px) |
+| 4 | lg | 1rem (16px) |
+| 6 | xl | 1.5rem (24px) |
+| 8 | 2xl | 2rem (32px) |
+| 12 | 3xl | 3rem (48px) |
+| 16 | - | 4rem (64px) |
 
-Use Tailwind padding/margin/gap utilities with these keys only (`p-1`, `px-2`, `gap-3`, `mt-6`, `space-y-8`, etc.). Disable or ignore everything else.
+Use either naming convention: `p-4` or `p-lg`, `mt-2` or `mt-sm`, `gap-8` or `gap-2xl`
 
 ## What Each Spacing Step is For (Desktop Defaults)
 
