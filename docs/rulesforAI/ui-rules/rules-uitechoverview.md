@@ -8,9 +8,10 @@ This project uses a **LEGO brick approach** where standardized components serve 
 
 ## Component Usage Hierarchy
 
-1. **DaisyUI Components** - Primary building blocks for most UI elements (buttons, cards, navbars, etc.)
-2. **Phoenix LiveView Components** - Functional components for forms, data display, state management
+1. **DaisyUI Components** - DEFAULT choice for ALL UI elements (buttons, cards, navbars, forms, tables, etc.)
+2. **Icons** - Use Phoenix `<.icon>` component ONLY for icons with `hero-*` naming  
 3. **Ash Authentication Phoenix Components** - Specialized components for authentication pages only
+4. **Phoenix LiveView Components** - Use ONLY when explicitly directed by user
 
 ### Implementation Philosophy
 - **Standard Syntax Only** - Use components exactly as documented
@@ -48,12 +49,46 @@ This approach enables flexible component composition while maintaining consisten
 
 ## Integration with UI Building
 
-The tech stack directly supports the component building block approach:
+The tech stack directly supports the DaisyUI-first component building block approach:
 
-- **Tailwind + DaisyUI** - Provides the majority of UI building blocks
-- **Phoenix LiveView** - Enables functional components with proper state management
-- **HEEx Templates** - Support both Phoenix component syntax (`<.component>`) and DaisyUI HTML
+- **Tailwind + DaisyUI** - Provides ALL primary UI building blocks (buttons, forms, tables, etc.)
+- **Heroicons Integration** - CSS-based icon system through Phoenix `<.icon>` component
+- **HEEx Templates** - Support both DaisyUI HTML and Phoenix icon syntax
+- **Phoenix LiveView** - Used ONLY when explicitly directed by user
 - **Natural Styling** - app.css + root.html.heex handle all visual appearance automatically
+
+## Icon Integration System
+
+The project uses a sophisticated Heroicons integration that converts SVG files into CSS classes:
+
+### How It Works
+1. **Installation**: Heroicons installed as git dependency at `deps/heroicons/optimized/`
+2. **Plugin**: `assets/vendor/heroicons.js` Tailwind plugin reads SVG files
+3. **CSS Generation**: SVGs converted to CSS classes with `data:image/svg+xml` URLs
+4. **Rendering**: Phoenix `<.icon>` component renders as `<span class="hero-name size-class" />`
+5. **Display**: CSS mask properties display the icon using currentColor
+
+### Technical Implementation
+```css
+/* Generated CSS example */
+.hero-bell {
+  --hero-bell: url('data:image/svg+xml;utf8,%3Csvg...%3E');
+  -webkit-mask: var(--hero-bell);
+  mask: var(--hero-bell);
+  mask-repeat: no-repeat;
+  background-color: currentColor;
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+```
+
+### Usage in Templates
+```heex
+<!-- Phoenix component renders CSS class -->
+<.icon name="hero-bell" class="h-6 w-6" />
+<!-- Becomes: <span class="hero-bell h-6 w-6"></span> -->
+```
 
 ## Build Configuration
 
@@ -61,6 +96,7 @@ The tech stack directly supports the component building block approach:
 - **Tailwind Output**: `priv/static/assets/css/app.css`
 - **JavaScript Entry**: `assets/js/app.js`
 - **JavaScript Output**: `priv/static/assets/js/`
+- **Heroicons Plugin**: `assets/vendor/heroicons.js`
 
 ## Related Documentation
 

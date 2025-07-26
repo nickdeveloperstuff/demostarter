@@ -20,9 +20,7 @@ defmodule DemostarterWeb.NewDemoDashboardLive do
             <div class="indicator">
               <span class="indicator-item badge badge-secondary">3</span>
               <button class="btn btn-ghost btn-circle">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5.5-5.5M9 12l6 6M3 21l3-3 6-6" />
-                </svg>
+                <.icon name="hero-bell" class="h-6 w-6" />
               </button>
             </div>
             <!-- User Avatar -->
@@ -48,9 +46,7 @@ defmodule DemostarterWeb.NewDemoDashboardLive do
       <div class="stats shadow w-full mb-8">
         <div class="stat">
           <div class="stat-figure text-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
+            <.icon name="hero-users" class="inline-block w-8 h-8" />
           </div>
           <div class="stat-title">Total Users</div>
           <div class="stat-value text-primary">1,234</div>
@@ -59,9 +55,7 @@ defmodule DemostarterWeb.NewDemoDashboardLive do
         
         <div class="stat">
           <div class="stat-figure text-secondary">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
-            </svg>
+            <.icon name="hero-shopping-bag" class="inline-block w-8 h-8" />
           </div>
           <div class="stat-title">Orders</div>
           <div class="stat-value text-secondary">567</div>
@@ -70,9 +64,7 @@ defmodule DemostarterWeb.NewDemoDashboardLive do
         
         <div class="stat">
           <div class="stat-figure text-accent">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-            </svg>
+            <.icon name="hero-chart-bar" class="inline-block w-8 h-8" />
           </div>
           <div class="stat-title">Growth Rate</div>
           <div class="stat-value text-accent">89%</div>
@@ -81,9 +73,7 @@ defmodule DemostarterWeb.NewDemoDashboardLive do
         
         <div class="stat">
           <div class="stat-figure text-success">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-            </svg>
+            <.icon name="hero-currency-dollar" class="inline-block w-8 h-8" />
           </div>
           <div class="stat-title">Revenue</div>
           <div class="stat-value text-success">$12,345</div>
@@ -140,30 +130,22 @@ defmodule DemostarterWeb.NewDemoDashboardLive do
             <h2 class="card-title">📝 Recent Activity</h2>
             <div class="space-y-3">
               <div class="alert alert-info">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+                <.icon name="hero-information-circle" class="shrink-0 w-6 h-6" />
                 <span>New user John Smith registered</span>
               </div>
               
               <div class="alert alert-success">
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <.icon name="hero-check-circle" class="shrink-0 h-6 w-6" />
                 <span>Order #1234 completed successfully</span>
               </div>
               
               <div class="alert alert-warning">
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5C2.962 17.333 3.924 19 5.464 19z" />
-                </svg>
+                <.icon name="hero-exclamation-triangle" class="shrink-0 h-6 w-6" />
                 <span>Payment pending for Order #1235</span>
               </div>
               
               <div class="alert">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+                <.icon name="hero-document-text" class="shrink-0 w-6 h-6" />
                 <span>Monthly report generated</span>
               </div>
             </div>

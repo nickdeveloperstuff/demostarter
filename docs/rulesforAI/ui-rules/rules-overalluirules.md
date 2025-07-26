@@ -23,7 +23,7 @@ Rules for building **complete UI features and pages** using standardized compone
 - **Natural styling inheritance** - let app.css and root.html.heex handle all styling
 - **Zero business logic** - keep all UI implementations purely visual
 - **Use dummy data patterns** - consistent sample data ("John Doe", "Sample Text", etc.)
-- **Follow component hierarchy** - DaisyUI primary → Phoenix functional → Ash auth only
+- **Follow component hierarchy** - DaisyUI ONLY → Icons via Phoenix `<.icon>` → Ash auth only
 - **Use Tailwind spacing only** - follow the spacing scale below
 
 ### SHOULD
@@ -53,18 +53,78 @@ Build UI features by combining components in this order:
 
 1. **Layout Foundation** - Use DaisyUI cards, heroes, dividers for structure
 2. **Navigation Elements** - Add DaisyUI menus, breadcrumbs, tabs for navigation
-3. **Data Display** - Include Phoenix tables/lists or DaisyUI stats for content
+3. **Data Display** - Use DaisyUI stats, tables, and lists for content
 4. **Interactive Elements** - Add DaisyUI buttons, modals, forms for actions
-5. **Feedback Systems** - Use Phoenix flash or DaisyUI alerts for responses
+5. **Feedback Systems** - Use DaisyUI alerts and toasts for responses
+6. **Icons** - Use Phoenix `<.icon name="hero-*">` component for all icons
 
 ### 3. Implementation Standards
-- **Phoenix Components:** `<.component attr="value">content</.component>`
-- **DaisyUI Components:** `<element class="daisy-class other-classes">content</element>`
+- **DaisyUI Components (PRIMARY):** `<element class="daisy-class other-classes">content</element>`
+- **Icons (ONLY EXCEPTION):** `<.icon name="hero-*" class="size-class" />`
+- **Phoenix Components:** Use ONLY when explicitly directed by user
 - **Natural Inheritance:** No custom styles - let existing CSS handle appearance
 - **Dummy Data:** Use consistent patterns (see component docs)
 
-### 4. Quality Checklist
-- [ ] Used only approved components from catalog
+### 4. Icon Usage Standards
+
+**ONLY use the Phoenix `<.icon>` component for icons** - this is the single exception to the DaisyUI-only rule.
+
+#### Icon Syntax
+```heex
+<!-- Basic icon -->
+<.icon name="hero-bell" class="h-6 w-6" />
+
+<!-- Different sizes -->
+<.icon name="hero-users" class="size-4" />
+<.icon name="hero-chart-bar" class="size-8" />
+
+<!-- With additional classes -->
+<.icon name="hero-check-circle" class="shrink-0 h-6 w-6" />
+```
+
+#### Available Icon Variants
+- **Outline (default):** `hero-bell`
+- **Solid:** `hero-bell-solid`
+- **Mini:** `hero-bell-mini`
+- **Micro:** `hero-bell-micro`
+
+#### Common Icon Names
+- `hero-bell` - Notifications
+- `hero-users` - User/people
+- `hero-chart-bar` - Analytics/stats
+- `hero-currency-dollar` - Money/revenue
+- `hero-information-circle` - Info alerts
+- `hero-check-circle` - Success states
+- `hero-exclamation-triangle` - Warnings
+- `hero-document-text` - Documents/reports
+
+#### Icon Integration in DaisyUI Components
+```heex
+<!-- In buttons -->
+<button class="btn btn-primary">
+  <.icon name="hero-plus" class="h-5 w-5" />
+  Add User
+</button>
+
+<!-- In alerts -->
+<div class="alert alert-info">
+  <.icon name="hero-information-circle" class="shrink-0 w-6 h-6" />
+  <span>Information message</span>
+</div>
+
+<!-- In stats -->
+<div class="stat">
+  <div class="stat-figure text-primary">
+    <.icon name="hero-users" class="inline-block w-8 h-8" />
+  </div>
+  <div class="stat-title">Total Users</div>
+  <div class="stat-value">1,234</div>
+</div>
+```
+
+### 5. Quality Checklist
+- [ ] Used only DaisyUI components (except icons)
+- [ ] Used `<.icon>` component for all icons with proper `hero-*` naming
 - [ ] Followed standard component syntax exactly
 - [ ] Applied natural styling inheritance (no custom styles)
 - [ ] Used consistent dummy data patterns

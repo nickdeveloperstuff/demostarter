@@ -8,73 +8,74 @@ These components are **building blocks** for creating complete UI features and p
 
 ## Component Hierarchy & Usage Priority
 
-1. **DaisyUI Components** - Primary choice for most UI elements (buttons, cards, navbars, etc.)
-2. **Phoenix LiveView Components** - For functional components requiring forms, state, errors, navigation
+1. **DaisyUI Components** - DEFAULT choice for ALL UI elements (buttons, cards, navbars, forms, tables, etc.)
+2. **Icons** - Use Phoenix `<.icon>` component ONLY for icons with `hero-*` naming
 3. **Ash Authentication Components** - Specifically for auth pages only
+4. **Phoenix LiveView Components** - Use ONLY when explicitly directed by user
 
 ## Implementation Standards
 
-- **Phoenix Components:** Use `<.component>` syntax with proper attributes
-- **DaisyUI Components:** Use standard HTML + CSS classes exactly as documented  
+- **DaisyUI Components (PRIMARY):** Use standard HTML + CSS classes exactly as documented  
+- **Icons (ONLY EXCEPTION):** Use `<.icon name="hero-*" class="..." />` syntax with proper attributes
+- **Phoenix Components:** Use ONLY when explicitly directed by user with `<.component>` syntax
 - **Natural Inheritance:** Let existing app.css and root.html.heex handle all styling
 - **Dummy Data:** Use minimal, realistic sample data ("John Doe", "Sample Text", etc.)
 - **No Business Logic:** Keep all UI implementations purely visual
 
-## Icons for Whole Project
-**From:** Heroicons library
+## Icons - The Only Phoenix Component Exception
 
+**Use ONLY the Phoenix `<.icon>` component for icons** - this is the single exception to the DaisyUI-only rule.
 
-## 1. Core Phoenix LiveView Functional Components
-
-**Location:** `lib/demostarter_web/components/core_components.ex`
-
-### Implementation Examples
+### Icon Implementation Examples
 
 ```heex
-<!-- Flash Messages -->
-<.flash kind={:info}>This is an info message</.flash>
-<.flash kind={:error}>This is an error message</.flash>
+<!-- Basic usage -->
+<.icon name="hero-bell" class="h-6 w-6" />
+<.icon name="hero-users" class="size-8" />
+<.icon name="hero-chart-bar" class="inline-block w-8 h-8" />
 
-<!-- Buttons -->
-<.button>Default Button</.button>
-<.button variant="primary">Primary Button</.button>
+<!-- With DaisyUI components -->
+<button class="btn btn-primary">
+  <.icon name="hero-plus" class="h-5 w-5" />
+  Add Item
+</button>
 
-<!-- Form Input -->
-<.input name="username" label="Username" value="sample_user" />
+<div class="alert alert-success">
+  <.icon name="hero-check-circle" class="shrink-0 h-6 w-6" />
+  <span>Success message</span>
+</div>
 
-<!-- Page Header -->
-<.header>Sample Page Title</.header>
-
-<!-- Data Table -->
-<.table id="users-table" rows={[%{name: "John Doe", email: "john@example.com"}]}>
-  <:col :let={user} label="Name">{user.name}</:col>
-  <:col :let={user} label="Email">{user.email}</:col>
-</.table>
-
-<!-- List -->
-<.list>
-  <:item title="Item 1">Description for item 1</:item>
-  <:item title="Item 2">Description for item 2</:item>
-</.list>
-
-<!-- Icons -->
-<.icon name="hero-home" class="w-6 h-6" />
-<.icon name="hero-user" class="w-6 h-6" />
-<.icon name="hero-star" class="w-6 h-6" />
+<div class="stat">
+  <div class="stat-figure text-primary">
+    <.icon name="hero-currency-dollar" class="inline-block w-8 h-8" />
+  </div>
+  <div class="stat-title">Revenue</div>
+  <div class="stat-value">$12,345</div>
+</div>
 ```
 
-### Available Components
-- `<.flash>` - Flash notifications (info/error variants)
-- `<.button>` - Interactive buttons (default/primary variants)
-- `<.input>` - Form inputs with labels/errors
-- `<.header>` - Page headers
-- `<.table>` - Data tables with columns
-- `<.list>` - Data lists with items
-- `<.icon>` - Heroicons with `hero-*` naming
+### Available Icon Variants
+- **Outline (default):** `hero-name`
+- **Solid:** `hero-name-solid`  
+- **Mini:** `hero-name-mini`
+- **Micro:** `hero-name-micro`
+
+### Common Icons for UI
+- `hero-bell` - Notifications, alerts
+- `hero-users` - User counts, people
+- `hero-chart-bar` - Analytics, statistics  
+- `hero-currency-dollar` - Revenue, money
+- `hero-shopping-bag` - Orders, purchases
+- `hero-information-circle` - Info messages
+- `hero-check-circle` - Success states
+- `hero-exclamation-triangle` - Warnings
+- `hero-document-text` - Reports, documents
+- `hero-plus` - Add actions
+- `hero-pencil` - Edit actions
+- `hero-trash` - Delete actions
 
 
-
-## 2. DaisyUI Components Available
+## 1. DaisyUI Components - Your Primary Building Blocks
 
 These are your primary building blocks for most UI elements. Use standard HTML structure with DaisyUI CSS classes exactly as documented.
 
@@ -257,8 +258,64 @@ Combine these components as building blocks:
 
 1. **Start with layout** (DaisyUI cards, heroes, dividers)
 2. **Add navigation** (DaisyUI menus, breadcrumbs, tabs)
-3. **Include data display** (Phoenix tables/lists or DaisyUI stats)
+3. **Include data display** (DaisyUI stats, tables, lists)
 4. **Add interactions** (DaisyUI buttons, modals, forms)
-5. **Provide feedback** (Phoenix flash or DaisyUI alerts)
+5. **Provide feedback** (DaisyUI alerts, toasts, progress)
+6. **Include icons** (Phoenix `<.icon name="hero-*">` components)
 
 **Remember:** Use `/ui-components` to see all components visually before building your UI features.
+
+---
+
+## ⚠️ Phoenix LiveView Components - Use Only When Explicitly Directed
+
+**DO NOT USE THESE COMPONENTS UNLESS EXPLICITLY TOLD BY THE USER**
+
+These components should ONLY be used when the user specifically asks for Phoenix components. By default, always use DaisyUI equivalents instead.
+
+### Why DaisyUI is Preferred
+- **Consistency:** All styling handled by DaisyUI theme
+- **Flexibility:** More component options and variations
+- **Simplicity:** Standard HTML + CSS classes vs. complex component syntax
+- **Performance:** Lighter weight than Phoenix components for pure UI
+
+### Phoenix Components (Use Only When Directed)
+
+**Location:** `lib/demostarter_web/components/core_components.ex`
+
+```heex
+<!-- Flash Messages (prefer DaisyUI alerts) -->
+<.flash kind={:info}>This is an info message</.flash>
+<.flash kind={:error}>This is an error message</.flash>
+
+<!-- Buttons (prefer DaisyUI buttons) -->
+<.button>Default Button</.button>
+<.button variant="primary">Primary Button</.button>
+
+<!-- Form Input (prefer DaisyUI inputs) -->
+<.input name="username" label="Username" value="sample_user" />
+
+<!-- Page Header (prefer DaisyUI hero) -->
+<.header>Sample Page Title</.header>
+
+<!-- Data Table (prefer DaisyUI table) -->
+<.table id="users-table" rows={[%{name: "John Doe", email: "john@example.com"}]}>
+  <:col :let={user} label="Name">{user.name}</:col>
+  <:col :let={user} label="Email">{user.email}</:col>
+</.table>
+
+<!-- List (prefer DaisyUI lists) -->
+<.list>
+  <:item title="Item 1">Description for item 1</:item>
+  <:item title="Item 2">Description for item 2</:item>
+</.list>
+```
+
+### Available Phoenix Components (Discouraged Unless Directed)
+- `<.flash>` - Flash notifications *(prefer DaisyUI alerts)*
+- `<.button>` - Interactive buttons *(prefer DaisyUI buttons)*
+- `<.input>` - Form inputs *(prefer DaisyUI inputs)*
+- `<.header>` - Page headers *(prefer DaisyUI hero)*
+- `<.table>` - Data tables *(prefer DaisyUI table)*
+- `<.list>` - Data lists *(prefer DaisyUI lists)*
+- `<.icon>` - **EXCEPTION: Always use this for icons**
