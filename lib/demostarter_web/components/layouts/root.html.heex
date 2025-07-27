@@ -38,7 +38,10 @@
   </head>
   <body>
     <div class="app-scroll-container" id="app-root">
-      {@inner_content}
+      <!-- Global grid wrapper - enforces base grid system -->
+      <div class="app-grid-wrapper">
+        {@inner_content}
+      </div>
     </div>
 
     <script>

@@ -12,7 +12,17 @@ Rules for building **complete UI features and pages** using standardized compone
 ### Cross-References:
 - `rules-uiavailablecomponents.md` – Complete catalog of available building blocks
 - `rules-uitechoverview.md` – Technical architecture and component hierarchy
+- `rules-grid-system.md` – Grid system that ALL pages inherit automatically
 - **Visual Reference:** `/ui-components` – See all components in action
+
+## 🚨 CRITICAL: Grid System Auto-Inheritance 🚨
+
+**EVERY PAGE IN THIS APPLICATION AUTOMATICALLY INHERITS THE GRID SYSTEM!**
+
+- The `.app-grid-wrapper` in `root.html.heex` wraps ALL content
+- You get 8px grid alignment, responsive padding, and proper spacing FOR FREE
+- There is NO WAY to create a page without the grid - it's enforced at the root level
+- **NEVER** modify `root.html.heex` or try to bypass the grid wrapper
 
 ## Must / Should / May
 
@@ -130,7 +140,7 @@ Build UI features by combining components in this order:
 - [ ] Used consistent dummy data patterns
 - [ ] Built complete functional mockup (not just individual components)
 - [ ] Validated appearance against `/ui-components` reference
-- [ ] Applied SUPERDESIGN enhancements (transitions, hover states, shadows)
+- [ ] Applied design system enhancements (transitions, hover states, shadows)
 - [ ] Used proper typography hierarchy
 - [ ] Ensured all interactive elements have focus states
 
@@ -147,7 +157,7 @@ Build UI features by combining components in this order:
 <!-- DaisyUI component FIRST -->
 <div class="card">
 
-<!-- Add SUPERDESIGN enhancements -->
+<!-- Add design system enhancements -->
 <div class="card shadow transition-all hover-lift hover-shadow-lg">
 ```
 
@@ -173,8 +183,11 @@ Build UI features by combining components in this order:
 
 **ONLY USE TAILWIND FOR SPACING!**
 
+## Grid Foundation
+**The 8px (0.5rem) grid is the foundation of ALL spacing.** Every page inherits this automatically through `.app-grid-wrapper`.
+
 ## Base Unit (u)
-**0.25rem (4px)**. Do not change this.
+**0.25rem (4px)**. This creates a 2:1 relationship with the 8px grid for fine-grained control.
 
 ## Allowed Scale (both numeric and semantic names)
 Numeric: `0` `0.5` `1` `1.5` `2` `3` `4` `6` `8` `12` `16`

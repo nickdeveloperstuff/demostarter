@@ -1,8 +1,9 @@
 # Design System Reference
 
 ## Core Philosophy
+- **Grid Foundation**: Every page inherits the 8px grid system automatically
 - **One Control Center**: app.css defines EVERYTHING
-- **LEGO Bricks**: DaisyUI components + SUPERDESIGN enhancements
+- **LEGO Bricks**: DaisyUI components + design system enhancements
 - **Utility Classes Only**: No custom CSS ever
 - **Visual Consistency**: Through CSS variables
 
@@ -32,7 +33,7 @@ Example:
 <!-- Base DaisyUI component -->
 <button class="btn btn-primary">Click me</button>
 
-<!-- Fully enhanced with SUPERDESIGN -->
+<!-- Fully enhanced with design system utilities -->
 <button class="btn btn-primary transition-all hover-scale focus-ring shadow-sm">
   Click me
 </button>
@@ -42,6 +43,7 @@ Example:
 
 ### Spacing (both conventions work)
 ```
+Base unit: 8px (0.5rem) - inherited from grid system
 Numeric: 0, 0.5, 1, 1.5, 2, 3, 4, 6, 8, 12, 16
 Semantic: xs, sm, md, lg, xl, 2xl, 3xl
 ```

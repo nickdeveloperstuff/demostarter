@@ -353,7 +353,7 @@ main, article, section, aside, nav, header, footer {
 }
 
 /* =================================================================
-   SUPERDESIGN INTEGRATION - Animation & Enhancement Utilities
+   DESIGN SYSTEM - Animation & Enhancement Utilities
    All visual control happens here in app.css
    ================================================================= */
 
@@ -511,3 +511,273 @@ p {
 .shadow-lg { box-shadow: var(--shadow-lg); }
 .shadow-xl { box-shadow: var(--shadow-xl); }
 .shadow-2xl { box-shadow: var(--shadow-2xl); }
+
+/* =================================================================
+   GRID SYSTEM - Square-based modular grid
+   Base unit: 8px (0.5rem) - enforces clean alignment
+   ================================================================= */
+
+/* Global grid wrapper - applied to all pages via root.html.heex */
+.app-grid-wrapper {
+  /* Base grid unit */
+  --grid-unit: 0.5rem; /* 8px */
+  
+  /* Grid columns for different breakpoints */
+  --grid-cols-mobile: 4;
+  --grid-cols-tablet: 8; 
+  --grid-cols-desktop: 12;
+  
+  /* Standard gutter */
+  --grid-gap: var(--spacing-2); /* 8px */
+  
+  /* Page padding */
+  padding: var(--spacing-4); /* 16px mobile */
+}
+
+@media (min-width: 640px) {
+  .app-grid-wrapper {
+    padding: var(--spacing-6); /* 24px tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-grid-wrapper {
+    padding: var(--spacing-8); /* 32px desktop */
+  }
+}
+
+/* Grid container classes */
+.grid-page {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols-mobile), minmax(0, 1fr));
+  gap: var(--grid-gap);
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .grid-page {
+    grid-template-columns: repeat(var(--grid-cols-tablet), minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-page {
+    grid-template-columns: repeat(var(--grid-cols-desktop), minmax(0, 1fr));
+  }
+}
+
+/* Auto-responsive grid */
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(var(--grid-unit) * 32), 1fr)); /* 256px min */
+  gap: var(--grid-gap);
+}
+
+/* Square-based grid with fixed aspect ratio cells */
+.grid-squares {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(var(--grid-unit) * 16), 1fr)); /* 128px min */
+  grid-auto-rows: 1fr;
+  gap: var(--grid-gap);
+}
+
+.grid-squares::before {
+  content: '';
+  width: 0;
+  padding-bottom: 100%;
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+.grid-squares > *:first-child {
+  grid-row: 1 / 1;
+  grid-column: 1 / 1;
+}
+
+/* Grid cell utilities */
+.grid-cell {
+  /* Base cell - spans full width on mobile */
+  grid-column: span var(--grid-cols-mobile);
+}
+
+/* Responsive cell spans */
+@media (min-width: 640px) {
+  .grid-cell-half { grid-column: span calc(var(--grid-cols-tablet) / 2); }
+  .grid-cell-third { grid-column: span calc(var(--grid-cols-tablet) / 3); }
+  .grid-cell-quarter { grid-column: span calc(var(--grid-cols-tablet) / 4); }
+}
+
+@media (min-width: 1024px) {
+  .grid-cell-half { grid-column: span calc(var(--grid-cols-desktop) / 2); }
+  .grid-cell-third { grid-column: span calc(var(--grid-cols-desktop) / 3); }
+  .grid-cell-quarter { grid-column: span calc(var(--grid-cols-desktop) / 4); }
+  .grid-cell-two-thirds { grid-column: span calc(var(--grid-cols-desktop) * 2 / 3); }
+}
+
+/* Column span utilities for explicit control */
+.col-span-1 { grid-column: span 1; }
+.col-span-2 { grid-column: span 2; }
+.col-span-3 { grid-column: span 3; }
+.col-span-4 { grid-column: span 4; }
+.col-span-5 { grid-column: span 5; }
+.col-span-6 { grid-column: span 6; }
+.col-span-7 { grid-column: span 7; }
+.col-span-8 { grid-column: span 8; }
+.col-span-9 { grid-column: span 9; }
+.col-span-10 { grid-column: span 10; }
+.col-span-11 { grid-column: span 11; }
+.col-span-12 { grid-column: span 12; }
+.col-span-full { grid-column: 1 / -1; }
+
+/* Row span utilities */
+.row-span-1 { grid-row: span 1; }
+.row-span-2 { grid-row: span 2; }
+.row-span-3 { grid-row: span 3; }
+.row-span-4 { grid-row: span 4; }
+
+/* Grid gap variants */
+.gap-0 { gap: 0; }
+.gap-1 { gap: var(--spacing-1); } /* 4px */
+.gap-2 { gap: var(--spacing-2); } /* 8px */
+.gap-3 { gap: var(--spacing-3); } /* 12px */
+.gap-4 { gap: var(--spacing-4); } /* 16px */
+.gap-6 { gap: var(--spacing-6); } /* 24px */
+.gap-8 { gap: var(--spacing-8); } /* 32px */
+
+/* =================================================================
+   ALIGNMENT & CENTERING UTILITIES
+   For consistent icon and content alignment within grid
+   ================================================================= */
+
+/* Flex centering utilities */
+.center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-vertical {
+  display: flex;
+  align-items: center;
+}
+
+.center-horizontal {
+  display: flex;
+  justify-content: center;
+}
+
+/* Icon alignment patterns */
+.icon-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  min-height: calc(var(--grid-unit) * 6); /* 48px touch target */
+}
+
+.icon-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-1);
+  text-align: center;
+}
+
+.icon-label-horizontal {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+/* Icon sizing constrained to grid units */
+.icon-xs { width: calc(var(--grid-unit) * 2); height: calc(var(--grid-unit) * 2); } /* 16px */
+.icon-sm { width: calc(var(--grid-unit) * 2.5); height: calc(var(--grid-unit) * 2.5); } /* 20px */
+.icon-md { width: calc(var(--grid-unit) * 3); height: calc(var(--grid-unit) * 3); } /* 24px */
+.icon-lg { width: calc(var(--grid-unit) * 4); height: calc(var(--grid-unit) * 4); } /* 32px */
+.icon-xl { width: calc(var(--grid-unit) * 6); height: calc(var(--grid-unit) * 6); } /* 48px */
+
+/* Ensure icons maintain size */
+.icon-xs svg, .icon-sm svg, .icon-md svg, .icon-lg svg, .icon-xl svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* =================================================================
+   GRID-AWARE SPACING UTILITIES
+   Reinforce grid alignment with consistent padding/margin
+   ================================================================= */
+
+/* Padding constrained to grid units */
+.p-grid-1 { padding: var(--grid-unit); } /* 8px */
+.p-grid-2 { padding: calc(var(--grid-unit) * 2); } /* 16px */
+.p-grid-3 { padding: calc(var(--grid-unit) * 3); } /* 24px */
+.p-grid-4 { padding: calc(var(--grid-unit) * 4); } /* 32px */
+
+/* Section spacing */
+.section-spacing {
+  padding-top: var(--spacing-8);
+  padding-bottom: var(--spacing-8);
+}
+
+@media (min-width: 640px) {
+  .section-spacing {
+    padding-top: var(--spacing-12);
+    padding-bottom: var(--spacing-12);
+  }
+}
+
+/* =================================================================
+   DEBUG GRID OVERLAY
+   Add class="grid-debug" to body to visualize grid
+   ================================================================= */
+
+.grid-debug {
+  position: relative;
+}
+
+.grid-debug::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(
+      to right,
+      rgba(255, 0, 0, 0.1) 0px,
+      rgba(255, 0, 0, 0.1) 1px,
+      transparent 1px,
+      transparent var(--grid-unit)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 0, 0, 0.1) 0px,
+      rgba(255, 0, 0, 0.1) 1px,
+      transparent 1px,
+      transparent var(--grid-unit)
+    );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Column guides for debugging */
+.grid-debug .grid-page::before,
+.grid-debug .grid-auto::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(0, 0, 255, 0.1) 0,
+    rgba(0, 0, 255, 0.1) calc((100% - var(--grid-gap) * (var(--grid-cols-desktop) - 1)) / var(--grid-cols-desktop)),
+    transparent calc((100% - var(--grid-gap) * (var(--grid-cols-desktop) - 1)) / var(--grid-cols-desktop)),
+    transparent calc((100% - var(--grid-gap) * (var(--grid-cols-desktop) - 1)) / var(--grid-cols-desktop) + var(--grid-gap))
+  );
+  pointer-events: none;
+  z-index: 9998;
+}

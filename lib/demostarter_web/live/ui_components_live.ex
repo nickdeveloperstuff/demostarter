@@ -7,8 +7,120 @@ defmodule DemostarterWeb.UiComponentsLive do
 
   def render(assigns) do
     ~H"""
-    <div class="p-8">
+    <div>
       <h1 class="text-3xl font-bold mb-8">UI Components Showcase</h1>
+      
+      <!-- Grid System Examples -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6">Grid System Examples</h2>
+        
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold mb-4">Basic Grid Layout</h3>
+          <.grid_page class="gap-4">
+            <div class="col-span-full bg-base-200 p-4 rounded">Full Width (12 columns)</div>
+            <div class="col-span-6 bg-base-200 p-4 rounded">Half Width (6 columns)</div>
+            <div class="col-span-6 bg-base-200 p-4 rounded">Half Width (6 columns)</div>
+            <div class="col-span-4 bg-base-200 p-4 rounded">One Third (4 columns)</div>
+            <div class="col-span-4 bg-base-200 p-4 rounded">One Third (4 columns)</div>
+            <div class="col-span-4 bg-base-200 p-4 rounded">One Third (4 columns)</div>
+          </.grid_page>
+        </div>
+        
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold mb-4">Responsive Grid Cells</h3>
+          <.grid_page>
+            <.grid_cell span="half">
+              <div class="bg-primary text-primary-content p-4 rounded">
+                Half width on tablet/desktop, full on mobile
+              </div>
+            </.grid_cell>
+            <.grid_cell span="half">
+              <div class="bg-secondary text-secondary-content p-4 rounded">
+                Half width on tablet/desktop, full on mobile
+              </div>
+            </.grid_cell>
+          </.grid_page>
+        </div>
+        
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold mb-4">Auto Grid</h3>
+          <div class="grid-auto gap-4">
+            <div class="card bg-base-100 shadow">
+              <div class="card-body">
+                <h4 class="card-title">Auto Card 1</h4>
+                <p>Automatically sizes based on content</p>
+              </div>
+            </div>
+            <div class="card bg-base-100 shadow">
+              <div class="card-body">
+                <h4 class="card-title">Auto Card 2</h4>
+                <p>Responsive grid that adjusts columns</p>
+              </div>
+            </div>
+            <div class="card bg-base-100 shadow">
+              <div class="card-body">
+                <h4 class="card-title">Auto Card 3</h4>
+                <p>Minimum width 256px per card</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold mb-4">Square Grid</h3>
+          <div class="grid-squares gap-4">
+            <div class="center-content bg-base-200 rounded">
+              <.icon name="hero-home" class="icon-lg" />
+            </div>
+            <div class="center-content bg-base-200 rounded">
+              <.icon name="hero-users" class="icon-lg" />
+            </div>
+            <div class="center-content bg-base-200 rounded">
+              <.icon name="hero-chart-bar" class="icon-lg" />
+            </div>
+            <div class="center-content bg-base-200 rounded">
+              <.icon name="hero-cog-6-tooth" class="icon-lg" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold mb-4">Icon Alignment</h3>
+          <div class="grid-page">
+            <div class="col-span-3">
+              <.icon_cell class="bg-base-200 rounded">
+                <.icon name="hero-bell" class="icon-md" />
+              </.icon_cell>
+            </div>
+            <div class="col-span-3">
+              <.icon_label label="Dashboard">
+                <:icon>
+                  <.icon name="hero-home" class="icon-md" />
+                </:icon>
+              </.icon_label>
+            </div>
+            <div class="col-span-6">
+              <.icon_label label="Settings" horizontal class="bg-base-200 p-4 rounded">
+                <:icon>
+                  <.icon name="hero-cog-6-tooth" class="icon-sm" />
+                </:icon>
+              </.icon_label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold mb-4">Section Spacing</h3>
+          <.grid_section class="bg-base-200 rounded">
+            <h4 class="text-lg font-semibold">First Section</h4>
+            <p>This section has automatic spacing applied</p>
+          </.grid_section>
+          <.grid_section class="bg-base-200 rounded">
+            <h4 class="text-lg font-semibold">Second Section</h4>
+            <p>Notice the consistent gap between sections</p>
+          </.grid_section>
+        </div>
+      </section>
       
     <!-- Core Phoenix LiveView Components -->
       <section class="mb-12">

@@ -469,4 +469,141 @@ defmodule DemostarterWeb.CoreComponents do
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
   end
+
+  @doc """
+  Grid container component for page layouts.
+  
+  ## Examples
+  
+      <.grid_page>
+        <div class="col-span-12">Full width content</div>
+        <div class="col-span-6">Half width</div>
+        <div class="col-span-6">Half width</div>
+      </.grid_page>
+  """
+  attr :class, :string, default: ""
+  attr :rest, :global
+  slot :inner_block, required: true
+
+  def grid_page(assigns) do
+    ~H"""
+    <div class={["grid-page", @class]} {@rest}>
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
+  @doc """
+  Grid section component with consistent spacing.
+  
+  ## Examples
+  
+      <.grid_section>
+        <h2>Section Title</h2>
+        <p>Section content</p>
+      </.grid_section>
+  """
+  attr :class, :string, default: ""
+  attr :rest, :global
+  slot :inner_block, required: true
+
+  def grid_section(assigns) do
+    ~H"""
+    <section class={["section-spacing", @class]} {@rest}>
+      <%= render_slot(@inner_block) %>
+    </section>
+    """
+  end
+
+  @doc """
+  Grid cell component for responsive layouts.
+  
+  ## Examples
+  
+      <.grid_cell span="half">
+        Content that takes half width on tablet/desktop
+      </.grid_cell>
+      
+      <.grid_cell span="third">
+        One third width content
+      </.grid_cell>
+  """
+  attr :span, :string, default: "full", values: ["full", "half", "third", "quarter", "two-thirds"]
+  attr :class, :string, default: ""
+  attr :rest, :global
+  slot :inner_block, required: true
+
+  def grid_cell(assigns) do
+    span_class = case assigns.span do
+      "half" -> "grid-cell grid-cell-half"
+      "third" -> "grid-cell grid-cell-third" 
+      "quarter" -> "grid-cell grid-cell-quarter"
+      "two-thirds" -> "grid-cell grid-cell-two-thirds"
+      _ -> "col-span-full"
+    end
+    
+    assigns = assign(assigns, :span_class, span_class)
+    
+    ~H"""
+    <div class={[@span_class, @class]} {@rest}>
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
+  @doc """
+  Icon cell component for centered icon display.
+  
+  ## Examples
+  
+      <.icon_cell>
+        <.icon name="hero-home" class="icon-md" />
+      </.icon_cell>
+  """
+  attr :class, :string, default: ""
+  attr :rest, :global
+  slot :inner_block, required: true
+
+  def icon_cell(assigns) do
+    ~H"""
+    <div class={["icon-cell", @class]} {@rest}>
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
+  @doc """
+  Icon with label component.
+  
+  ## Examples
+  
+      <.icon_label label="Dashboard">
+        <:icon>
+          <.icon name="hero-home" class="icon-md" />
+        </:icon>
+      </.icon_label>
+      
+      <.icon_label label="Settings" horizontal>
+        <:icon>
+          <.icon name="hero-cog-6-tooth" class="icon-sm" />
+        </:icon>
+      </.icon_label>
+  """
+  attr :label, :string, required: true
+  attr :horizontal, :boolean, default: false
+  attr :class, :string, default: ""
+  attr :rest, :global
+  slot :icon, required: true
+
+  def icon_label(assigns) do
+    layout_class = if assigns.horizontal, do: "icon-label-horizontal", else: "icon-label"
+    assigns = assign(assigns, :layout_class, layout_class)
+    
+    ~H"""
+    <div class={[@layout_class, @class]} {@rest}>
+      <%= render_slot(@icon) %>
+      <span><%= @label %></span>
+    </div>
+    """
+  end
 end

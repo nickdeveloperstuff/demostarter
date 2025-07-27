@@ -21,7 +21,10 @@ This project uses a **LEGO brick approach** where standardized components serve 
 
 ## Critical Files - DO NOT MODIFY
 
-**root.html.heex** (`lib/demostarter_web/components/layouts/root.html.heex`) - DO NOT TOUCH THIS FILE. Contains the base HTML structure and theme switching logic.
+**root.html.heex** (`lib/demostarter_web/components/layouts/root.html.heex`) - DO NOT TOUCH THIS FILE. Contains:
+- The base HTML structure and theme switching logic
+- **THE GRID WRAPPER** (`.app-grid-wrapper`) that enforces grid system on ALL pages
+- This wrapper is the foundation of the entire design system - modifying it breaks everything
 
 ## Styling Control
 
@@ -100,7 +103,13 @@ The project uses a sophisticated Heroicons integration that converts SVG files i
 
 ## Enhanced Design System
 
-Building on the DaisyUI foundation, we've integrated SUPERDESIGN principles:
+Building on the DaisyUI foundation, we've integrated comprehensive design system principles:
+
+### Grid System (FOUNDATION OF EVERYTHING)
+- **8px Base Unit**: All spacing and sizing derives from this
+- **Automatic Inheritance**: Every page wrapped in `.app-grid-wrapper`
+- **Responsive Columns**: 4 (mobile), 8 (tablet), 12 (desktop)
+- **Enforced at Root**: Impossible to create pages without grid alignment
 
 ### Typography System
 - **Google Fonts**: Inter (sans), JetBrains Mono (mono), Merriweather (serif)
