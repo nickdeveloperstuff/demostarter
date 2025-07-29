@@ -21,172 +21,230 @@ This document provides a comprehensive, step-by-step implementation plan for Pha
 **IMPORTANT: The CSS defined here is ONLY for internal use by widget implementations. Developers will never write CSS classes in their templates - they will only use widget components.**
 
 #### 1.1.1 Clean Slate Approach
-First, we'll strip the existing CSS to its core Tailwind imports:
+First, we'll strip the existing CSS to its core Tailwind imports using Tailwind CSS 4.0 syntax:
 
 ```css
-/* Remove ALL existing custom CSS except these imports */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+/* Tailwind CSS 4.0 imports */
+@import "tailwindcss" source(none);
+@source "../../deps/ash_authentication_phoenix";
+@source "../css";
+@source "../js";
+@source "../../lib/demostarter_web";
+
+/* DaisyUI plugin */
+@plugin "../vendor/daisyui" {
+  themes: false;
+}
 ```
 
 #### 1.1.2 Define LEGO Grid System Variables
-Add comprehensive CSS custom properties for the grid system. **IMPORTANT: These CSS classes will ONLY be used internally by widget implementations. Developers will never use these classes directly in templates.**
+Add comprehensive CSS custom properties for the grid system using Tailwind CSS 4.0's @theme block. **IMPORTANT: These CSS classes will ONLY be used internally by widget implementations. Developers will never use these classes directly in templates.**
 
 ```css
-@layer base {
-  :root {
-    /* LEGO Unit System - 4px base unit for mathematical consistency */
-    --lego-unit: 4px;
-    --lego-unit-2: calc(var(--lego-unit) * 2);   /* 8px */
-    --lego-unit-3: calc(var(--lego-unit) * 3);   /* 12px */
-    --lego-unit-4: calc(var(--lego-unit) * 4);   /* 16px */
-    --lego-unit-6: calc(var(--lego-unit) * 6);   /* 24px */
-    --lego-unit-8: calc(var(--lego-unit) * 8);   /* 32px */
-    --lego-unit-12: calc(var(--lego-unit) * 12); /* 48px */
-    --lego-unit-16: calc(var(--lego-unit) * 16); /* 64px */
-    
-    /* Grid Configuration */
-    --lego-cols: 12;
-    --lego-gap: var(--lego-unit-4);              /* 16px standard gap */
-    --lego-container-max: 1200px;
-    --lego-container-padding: var(--lego-unit-6);
-    
-    /* Widget Heights (based on rows) */
-    --lego-row-height: var(--lego-unit-16);      /* 64px base row height */
-    --lego-row-gap: var(--lego-gap);
-    
-    /* Z-index layers */
-    --lego-z-base: 0;
-    --lego-z-widget: 10;
-    --lego-z-overlay: 20;
-    --lego-z-modal: 30;
-    --lego-z-toast: 40;
-    
-    /* Transitions */
-    --lego-transition-fast: 150ms ease-in-out;
-    --lego-transition-base: 250ms ease-in-out;
-    --lego-transition-slow: 350ms ease-in-out;
-    
-    /* Shadows */
-    --lego-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --lego-shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --lego-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --lego-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  }
+/* Define theme variables in Tailwind CSS 4.0 */
+@theme {
+  /* LEGO Unit System - 4px base unit for mathematical consistency */
+  --lego-unit: 4px;
+  --lego-unit-2: calc(var(--lego-unit) * 2);   /* 8px */
+  --lego-unit-3: calc(var(--lego-unit) * 3);   /* 12px */
+  --lego-unit-4: calc(var(--lego-unit) * 4);   /* 16px */
+  --lego-unit-6: calc(var(--lego-unit) * 6);   /* 24px */
+  --lego-unit-8: calc(var(--lego-unit) * 8);   /* 32px */
+  --lego-unit-12: calc(var(--lego-unit) * 12); /* 48px */
+  --lego-unit-16: calc(var(--lego-unit) * 16); /* 64px */
+  
+  /* Grid Configuration */
+  --lego-cols: 12;
+  --lego-gap: var(--lego-unit-4);              /* 16px standard gap */
+  --lego-container-max: 1200px;
+  --lego-container-padding: var(--lego-unit-6);
+  
+  /* Widget Heights (based on rows) */
+  --lego-row-height: var(--lego-unit-16);      /* 64px base row height */
+  --lego-row-gap: var(--lego-gap);
+  
+  /* Z-index layers */
+  --lego-z-base: 0;
+  --lego-z-widget: 10;
+  --lego-z-overlay: 20;
+  --lego-z-modal: 30;
+  --lego-z-toast: 40;
+  
+  /* Transitions */
+  --lego-transition-fast: 150ms ease-in-out;
+  --lego-transition-base: 250ms ease-in-out;
+  --lego-transition-slow: 350ms ease-in-out;
+  
+  /* Shadows */
+  --lego-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --lego-shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --lego-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --lego-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Spacing values for Tailwind utilities */
+  --spacing-lego-1: var(--lego-unit);
+  --spacing-lego-2: var(--lego-unit-2);
+  --spacing-lego-3: var(--lego-unit-3);
+  --spacing-lego-4: var(--lego-unit-4);
+  --spacing-lego-6: var(--lego-unit-6);
+  --spacing-lego-8: var(--lego-unit-8);
+  --spacing-lego-12: var(--lego-unit-12);
+  --spacing-lego-16: var(--lego-unit-16);
 }
 ```
 
 #### 1.1.3 LEGO Container Classes
-Define the core container and widget classes:
+Define the core container and widget classes. Note that in Tailwind CSS 4.0, we define these classes directly without @layer:
 
 ```css
-@layer components {
-  /* Main container for the grid system */
-  .lego-container {
-    display: grid;
-    grid-template-columns: repeat(var(--lego-cols), 1fr);
-    gap: var(--lego-gap);
-    max-width: var(--lego-container-max);
-    margin: 0 auto;
-    padding: var(--lego-container-padding);
-    container-type: inline-size;
-  }
-  
-  /* Base widget styling */
-  .lego-widget {
-    container-type: inline-size;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    background: theme(colors.base-100);
-    border-radius: var(--lego-unit-2);
-    box-shadow: var(--lego-shadow-base);
-    transition: box-shadow var(--lego-transition-fast);
-    position: relative;
-    z-index: var(--lego-z-widget);
-  }
-  
-  .lego-widget:hover {
-    box-shadow: var(--lego-shadow-md);
-  }
-  
-  /* Widget header */
-  .lego-widget-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--lego-unit-4);
-    border-bottom: 1px solid theme(colors.base-200);
-  }
-  
-  .lego-widget-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: theme(colors.base-content);
-    margin: 0;
-  }
-  
-  .lego-widget-actions {
-    display: flex;
-    gap: var(--lego-unit-2);
-  }
-  
-  /* Widget content area */
-  .lego-widget-content {
-    flex: 1;
-    padding: var(--lego-unit-4);
-    overflow: auto;
-  }
-  
-  /* Widget footer */
-  .lego-widget-footer {
-    padding: var(--lego-unit-3) var(--lego-unit-4);
-    border-top: 1px solid theme(colors.base-200);
-    background: theme(colors.base-50);
-  }
+/* LEGO Container and Widget Classes */
+/* Main container for the grid system */
+.lego-container {
+  display: grid;
+  grid-template-columns: repeat(var(--lego-cols), 1fr);
+  gap: var(--lego-gap);
+  max-width: var(--lego-container-max);
+  margin: 0 auto;
+  padding: var(--lego-container-padding);
+  container-type: inline-size;
+}
+
+/* Base widget styling */
+.lego-widget {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-base-100);
+  border-radius: var(--lego-unit-2);
+  box-shadow: var(--lego-shadow-base);
+  transition: box-shadow var(--lego-transition-fast);
+  position: relative;
+  z-index: var(--lego-z-widget);
+}
+
+.lego-widget:hover {
+  box-shadow: var(--lego-shadow-md);
+}
+
+/* Widget header */
+.lego-widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--lego-unit-4);
+  border-bottom: 1px solid var(--color-base-200);
+}
+
+.lego-widget-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-base-content);
+  margin: 0;
+}
+
+.lego-widget-actions {
+  display: flex;
+  gap: var(--lego-unit-2);
+}
+
+/* Widget content area */
+.lego-widget-content {
+  flex: 1;
+  padding: var(--lego-unit-4);
+  overflow: auto;
+}
+
+/* Widget footer */
+.lego-widget-footer {
+  padding: var(--lego-unit-3) var(--lego-unit-4);
+  border-top: 1px solid var(--color-base-200);
+  background: var(--color-base-50);
 }
 ```
 
 #### 1.1.4 Widget Size Classes (Grid-based)
-Define all allowed widget sizes:
+Define all allowed widget sizes without using @apply (which is discouraged in Tailwind CSS 4.0):
 
 ```css
-@layer utilities {
-  /* Column span utilities */
-  .lego-cols-1 { grid-column: span 1; }
-  .lego-cols-2 { grid-column: span 2; }
-  .lego-cols-3 { grid-column: span 3; }
-  .lego-cols-4 { grid-column: span 4; }
-  .lego-cols-6 { grid-column: span 6; }
-  .lego-cols-12 { grid-column: span 12; }
-  
-  /* Row span utilities with minimum heights */
-  .lego-rows-1 { 
-    grid-row: span 1; 
-    min-height: var(--lego-row-height);
-  }
-  .lego-rows-2 { 
-    grid-row: span 2; 
-    min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
-  }
-  .lego-rows-3 { 
-    grid-row: span 3; 
-    min-height: calc(var(--lego-row-height) * 3 + var(--lego-row-gap) * 2);
-  }
-  
-  /* Combined size classes - the only allowed widget sizes */
-  .lego-1x1 { @apply lego-cols-1 lego-rows-1; }
-  .lego-2x1 { @apply lego-cols-2 lego-rows-1; }
-  .lego-2x2 { @apply lego-cols-2 lego-rows-2; }
-  .lego-3x1 { @apply lego-cols-3 lego-rows-1; }
-  .lego-3x2 { @apply lego-cols-3 lego-rows-2; }
-  .lego-4x1 { @apply lego-cols-4 lego-rows-1; }
-  .lego-4x2 { @apply lego-cols-4 lego-rows-2; }
-  .lego-6x1 { @apply lego-cols-6 lego-rows-1; }
-  .lego-6x2 { @apply lego-cols-6 lego-rows-2; }
-  .lego-12x1 { @apply lego-cols-12 lego-rows-1; }
-  .lego-12x2 { @apply lego-cols-12 lego-rows-2; }
+/* Widget Size Utilities */
+/* Column span utilities */
+.lego-cols-1 { grid-column: span 1; }
+.lego-cols-2 { grid-column: span 2; }
+.lego-cols-3 { grid-column: span 3; }
+.lego-cols-4 { grid-column: span 4; }
+.lego-cols-6 { grid-column: span 6; }
+.lego-cols-12 { grid-column: span 12; }
+
+/* Row span utilities with minimum heights */
+.lego-rows-1 { 
+  grid-row: span 1; 
+  min-height: var(--lego-row-height);
+}
+.lego-rows-2 { 
+  grid-row: span 2; 
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-rows-3 { 
+  grid-row: span 3; 
+  min-height: calc(var(--lego-row-height) * 3 + var(--lego-row-gap) * 2);
+}
+
+/* Combined size classes - the only allowed widget sizes */
+.lego-1x1 { 
+  grid-column: span 1;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-2x1 { 
+  grid-column: span 2;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-2x2 { 
+  grid-column: span 2;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-3x1 { 
+  grid-column: span 3;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-3x2 { 
+  grid-column: span 3;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-4x1 { 
+  grid-column: span 4;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-4x2 { 
+  grid-column: span 4;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-6x1 { 
+  grid-column: span 6;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-6x2 { 
+  grid-column: span 6;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-12x1 { 
+  grid-column: span 12;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-12x2 { 
+  grid-column: span 12;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
 }
 ```
 
@@ -194,67 +252,66 @@ Define all allowed widget sizes:
 Implement widget-level and system-level responsive behavior:
 
 ```css
-@layer utilities {
-  /* Widget-level responsive adjustments using container queries */
-  @container (max-width: 200px) {
-    .lego-widget {
-      --lego-padding: var(--lego-unit-2);
-    }
-    .lego-widget-title {
-      font-size: 0.75rem;
-    }
-    .lego-widget-content {
-      padding: var(--lego-padding);
-    }
+/* Container Query Responsive System */
+/* Widget-level responsive adjustments using container queries */
+@container (max-width: 200px) {
+  .lego-widget {
+    --lego-padding: var(--lego-unit-2);
+  }
+  .lego-widget-title {
+    font-size: 0.75rem;
+  }
+  .lego-widget-content {
+    padding: var(--lego-padding);
+  }
+}
+
+@container (min-width: 300px) and (max-width: 400px) {
+  .lego-widget {
+    --lego-padding: var(--lego-unit-3);
+  }
+  .lego-widget-title {
+    font-size: 0.875rem;
+  }
+}
+
+@container (min-width: 400px) {
+  .lego-widget {
+    --lego-padding: var(--lego-unit-4);
+  }
+  .lego-widget-title {
+    font-size: 1rem;
+  }
+}
+
+/* System-level responsive grid collapse */
+@media (max-width: 768px) {
+  .lego-container {
+    grid-template-columns: 1fr;
+    padding: var(--lego-unit-4);
   }
   
-  @container (min-width: 300px) and (max-width: 400px) {
-    .lego-widget {
-      --lego-padding: var(--lego-unit-3);
-    }
-    .lego-widget-title {
-      font-size: 0.875rem;
-    }
+  /* Force all widgets to full width on mobile */
+  .lego-widget {
+    grid-column: span 1 !important;
   }
   
-  @container (min-width: 400px) {
-    .lego-widget {
-      --lego-padding: var(--lego-unit-4);
-    }
-    .lego-widget-title {
-      font-size: 1rem;
-    }
+  /* Adjust row heights for mobile */
+  .lego-rows-2,
+  .lego-rows-3 {
+    min-height: auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .lego-container {
+    grid-template-columns: repeat(6, 1fr);
   }
   
-  /* System-level responsive grid collapse */
-  @media (max-width: 768px) {
-    .lego-container {
-      grid-template-columns: 1fr;
-      padding: var(--lego-unit-4);
-    }
-    
-    /* Force all widgets to full width on mobile */
-    .lego-widget {
-      grid-column: span 1 !important;
-    }
-    
-    /* Adjust row heights for mobile */
-    .lego-rows-2,
-    .lego-rows-3 {
-      min-height: auto;
-    }
-  }
-  
-  @media (min-width: 768px) and (max-width: 1024px) {
-    .lego-container {
-      grid-template-columns: repeat(6, 1fr);
-    }
-    
-    /* Adjust widget spans for tablet */
-    .lego-cols-12 { grid-column: span 6; }
-    .lego-cols-6 { grid-column: span 6; }
-    .lego-cols-4 { grid-column: span 3; }
-  }
+  /* Adjust widget spans for tablet */
+  .lego-cols-12 { grid-column: span 6; }
+  .lego-cols-6 { grid-column: span 6; }
+  .lego-cols-4 { grid-column: span 3; }
 }
 ```
 
@@ -262,166 +319,100 @@ Implement widget-level and system-level responsive behavior:
 Add supporting layout classes:
 
 ```css
-@layer utilities {
-  /* Section styling */
-  .lego-section {
-    margin-bottom: var(--lego-unit-8);
-  }
-  
-  .lego-section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: var(--lego-unit-4);
-    color: theme(colors.base-content);
-  }
-  
-  /* Main content area */
-  .lego-main {
-    min-height: 100vh;
-    background: theme(colors.base-50);
-    padding-top: var(--lego-unit-6);
-    padding-bottom: var(--lego-unit-12);
-  }
-  
-  /* Spacing utilities using LEGO units */
-  .lego-space-1 { margin: var(--lego-unit); }
-  .lego-space-2 { margin: var(--lego-unit-2); }
-  .lego-space-4 { margin: var(--lego-unit-4); }
-  .lego-space-6 { margin: var(--lego-unit-6); }
-  .lego-space-8 { margin: var(--lego-unit-8); }
-  
-  /* Padding utilities */
-  .lego-pad-1 { padding: var(--lego-unit); }
-  .lego-pad-2 { padding: var(--lego-unit-2); }
-  .lego-pad-4 { padding: var(--lego-unit-4); }
-  .lego-pad-6 { padding: var(--lego-unit-6); }
-  .lego-pad-8 { padding: var(--lego-unit-8); }
+/* Additional Layout Utilities */
+/* Section styling */
+.lego-section {
+  margin-bottom: var(--lego-unit-8);
 }
+
+.lego-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--lego-unit-4);
+  color: var(--color-base-content);
+}
+
+/* Main content area */
+.lego-main {
+  min-height: 100vh;
+  background: var(--color-base-50);
+  padding-top: var(--lego-unit-6);
+  padding-bottom: var(--lego-unit-12);
+}
+
+/* Spacing utilities using LEGO units */
+.lego-space-1 { margin: var(--lego-unit); }
+.lego-space-2 { margin: var(--lego-unit-2); }
+.lego-space-4 { margin: var(--lego-unit-4); }
+.lego-space-6 { margin: var(--lego-unit-6); }
+.lego-space-8 { margin: var(--lego-unit-8); }
+
+/* Padding utilities */
+.lego-pad-1 { padding: var(--lego-unit); }
+.lego-pad-2 { padding: var(--lego-unit-2); }
+.lego-pad-4 { padding: var(--lego-unit-4); }
+.lego-pad-6 { padding: var(--lego-unit-6); }
+.lego-pad-8 { padding: var(--lego-unit-8); }
 ```
 
 ---
 
-## 2. TAILWIND CONFIGURATION OVERHAUL
+## 2. TAILWIND CSS 4.0 CONFIGURATION
 
-### 2.1 Update Tailwind Configuration
-**File:** `assets/tailwind.config.js`
+### 2.1 Tailwind CSS 4.0 Setup
+Since Tailwind CSS 4.0 doesn't use a configuration file, all customization is done in the CSS file using the `@theme` block and `@plugin` directives. The configuration from the previous section (1.1.2) already includes the necessary theme variables.
 
-Replace the entire configuration with:
+### 2.2 DaisyUI Theme Configuration
+Add the LEGO theme configuration to the DaisyUI plugin in `assets/css/app.css`:
 
-```javascript
-module.exports = {
-  content: [
-    "./js/**/*.js",
-    "../lib/demostarter_web/**/*.*ex",
-    "../lib/demostarter_web/**/*.*heex"
-  ],
-  theme: {
-    extend: {
-      // Add LEGO spacing units to Tailwind
-      spacing: {
-        'lego-1': 'var(--lego-unit)',
-        'lego-2': 'var(--lego-unit-2)',
-        'lego-3': 'var(--lego-unit-3)',
-        'lego-4': 'var(--lego-unit-4)',
-        'lego-6': 'var(--lego-unit-6)',
-        'lego-8': 'var(--lego-unit-8)',
-        'lego-12': 'var(--lego-unit-12)',
-        'lego-16': 'var(--lego-unit-16)',
-      },
-      // Grid template for LEGO system
-      gridTemplateColumns: {
-        'lego': 'repeat(12, 1fr)',
-      },
-      // Container sizes
-      maxWidth: {
-        'lego': 'var(--lego-container-max)',
-      },
-      // Z-index scale
-      zIndex: {
-        'lego-base': 'var(--lego-z-base)',
-        'lego-widget': 'var(--lego-z-widget)',
-        'lego-overlay': 'var(--lego-z-overlay)',
-        'lego-modal': 'var(--lego-z-modal)',
-        'lego-toast': 'var(--lego-z-toast)',
-      },
-      // Transition durations
-      transitionDuration: {
-        'lego-fast': 'var(--lego-transition-fast)',
-        'lego-base': 'var(--lego-transition-base)',
-        'lego-slow': 'var(--lego-transition-slow)',
-      }
-    }
-  },
-  plugins: [
-    require("daisyui"),
-    require("@tailwindcss/container-queries")
-  ],
-  daisyui: {
-    themes: [
-      {
-        lego: {
-          "primary": "#3B82F6",
-          "primary-focus": "#2563EB",
-          "primary-content": "#FFFFFF",
-          
-          "secondary": "#8B5CF6",
-          "secondary-focus": "#7C3AED",
-          "secondary-content": "#FFFFFF",
-          
-          "accent": "#10B981",
-          "accent-focus": "#059669",
-          "accent-content": "#FFFFFF",
-          
-          "neutral": "#374151",
-          "neutral-focus": "#1F2937",
-          "neutral-content": "#FFFFFF",
-          
-          "base-100": "#FFFFFF",
-          "base-200": "#F3F4F6",
-          "base-300": "#E5E7EB",
-          "base-content": "#1F2937",
-          
-          "info": "#3ABFF8",
-          "success": "#36D399",
-          "warning": "#FBBD23",
-          "error": "#F87272",
-          
-          "--rounded-box": "0.5rem",
-          "--rounded-btn": "0.25rem",
-          "--rounded-badge": "0.125rem",
-          "--animation-btn": "0.25s",
-          "--animation-input": "0.2s",
-          "--btn-text-case": "none",
-          "--btn-focus-scale": "0.95",
-          "--border-btn": "1px",
-          "--tab-border": "1px",
-          "--tab-radius": "0.25rem",
-        },
-      },
-      "dark"
-    ],
-    base: true,
-    styled: true,
-    utils: true,
-    logs: false,
-  },
-  // Safelist critical LEGO classes to ensure they're never purged
-  safelist: [
-    {
-      pattern: /lego-(1x1|2x1|2x2|3x1|3x2|4x1|4x2|6x1|6x2|12x1|12x2)/,
-    },
-    {
-      pattern: /lego-(cols|rows)-(1|2|3|4|6|12)/,
-    }
-  ]
+```css
+/* DaisyUI Theme Configuration */
+@plugin "../vendor/daisyui-theme" {
+  name: "lego";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-primary: #3B82F6;
+  --color-primary-focus: #2563EB;
+  --color-primary-content: #FFFFFF;
+  
+  --color-secondary: #8B5CF6;
+  --color-secondary-focus: #7C3AED;
+  --color-secondary-content: #FFFFFF;
+  
+  --color-accent: #10B981;
+  --color-accent-focus: #059669;
+  --color-accent-content: #FFFFFF;
+  
+  --color-neutral: #374151;
+  --color-neutral-focus: #1F2937;
+  --color-neutral-content: #FFFFFF;
+  
+  --color-base-100: #FFFFFF;
+  --color-base-200: #F3F4F6;
+  --color-base-300: #E5E7EB;
+  --color-base-content: #1F2937;
+  
+  --color-info: #3ABFF8;
+  --color-success: #36D399;
+  --color-warning: #FBBD23;
+  --color-error: #F87272;
+  
+  --radius-box: 0.5rem;
+  --radius-btn: 0.25rem;
+  --radius-badge: 0.125rem;
+  --animation-btn: 0.25s;
+  --animation-input: 0.2s;
+  --btn-text-case: none;
+  --btn-focus-scale: 0.95;
+  --border: 1px;
+  --tab-border: 1px;
+  --tab-radius: 0.25rem;
 }
 ```
 
-### 2.2 Install Required Dependencies
-```bash
-cd assets
-npm install --save-dev @tailwindcss/container-queries
-```
+### 2.3 Container Queries Plugin
+Container queries are part of standard CSS and don't require a separate plugin in Tailwind CSS 4.0. The container query styles are already included in the widget definitions above.
 
 ---
 

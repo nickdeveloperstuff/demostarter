@@ -16,6 +16,95 @@ This document provides the implementation plan for Phase 3 of the LEGO-style UI 
 
 ## 1. LAYOUT FUNDAMENTALS
 
+### 1.0 Tailwind CSS 4.0 Requirements for Layouts
+
+**IMPORTANT**: Layout components use responsive utilities that must be defined in your CSS. Add these to your `app.css`:
+
+```css
+/* Grid column utilities */
+.col-span-1 { grid-column: span 1; }
+.col-span-2 { grid-column: span 2; }
+.col-span-3 { grid-column: span 3; }
+.col-span-4 { grid-column: span 4; }
+.col-span-6 { grid-column: span 6; }
+.col-span-8 { grid-column: span 8; }
+.col-span-12 { grid-column: span 12; }
+
+/* Responsive grid columns */
+@media (min-width: 1024px) {
+  .lg\:col-span-1 { grid-column: span 1; }
+  .lg\:col-span-3 { grid-column: span 3; }
+  .lg\:col-span-4 { grid-column: span 4; }
+  .lg\:col-span-8 { grid-column: span 8; }
+  .lg\:col-start-2 { grid-column-start: 2; }
+  .lg\:col-start-4 { grid-column-start: 4; }
+  .lg\:col-span-10 { grid-column: span 10; }
+  .lg\:grid-cols-\[300px_1fr\] { grid-template-columns: 300px 1fr; }
+  .lg\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1280px) {
+  .xl\:col-start-3 { grid-column-start: 3; }
+  .xl\:col-span-8 { grid-column: span 8; }
+  .xl\:block { display: block; }
+}
+
+/* Responsive display utilities */
+.hidden { display: none; }
+@media (min-width: 1024px) {
+  .lg\:block { display: block; }
+}
+
+/* Max width utilities */
+.max-w-screen-sm { max-width: 640px; }
+.max-w-screen-md { max-width: 768px; }
+.max-w-screen-lg { max-width: 1024px; }
+.max-w-screen-xl { max-width: 1280px; }
+.max-w-screen-2xl { max-width: 1536px; }
+
+/* Height utilities */
+.h-8 { height: 2rem; }
+.min-h-screen { min-height: 100vh; }
+
+/* Background colors */
+.bg-base-50 { background-color: var(--color-base-50); }
+.bg-base-200 { background-color: var(--color-base-200); }
+
+/* Grid template columns */
+.grid-cols-12 { grid-template-columns: repeat(12, 1fr); }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+/* Spacing utilities */
+.gap-4 { gap: 1rem; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-6 { gap: 1.5rem; }
+
+/* Additional margin utilities */
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+
+/* Additional padding */
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+.p-12 { padding: 3rem; }
+
+/* Text alignment (already defined in Phase 2, included here for completeness) */
+.text-center { text-align: center; }
+
+/* Responsive grid for medium screens */
+@media (min-width: 768px) {
+  .md\:col-span-6 { grid-column: span 6; }
+}
+```
+
 ### 1.1 Understanding the Grid System
 
 The 12-column grid from Phase 1 serves as the foundation for all layouts:

@@ -2,16 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
+
+##Overall technical architecture of this project
 
 Demostarter is a Phoenix/Elixir web application starter template built with the Ash framework. It provides authentication, admin capabilities, and a modern UI foundation using Phoenix LiveView, Tailwind CSS, and DaisyUI.
 
-## Documentation Reference
-
-The `docs/` folder contains background reference materials that are available but not needed most of the time. These should only be consulted when relevant to the specific task at hand or when prompted by the user:
-
-- `docs/HistoryOfWork/` - Previous plans and implementations of occaisional/technical/difficult implementations.
-- `docs/rulesforAI/` - AI development guidelines and UI component references
 
 ## Essential Commands
 
@@ -56,23 +51,6 @@ mix compile --warnings-as-errors  # Check for compilation warnings
 - **Icons**: Heroicons
 - **Build Tools**: esbuild (JavaScript), Tailwind (CSS)
 
-### Key Directory Structure
-```
-lib/
-├── demostarter/           # Business logic and Ash resources
-│   ├── accounts/          # User management and authentication
-│   └── application.ex     # OTP application
-├── demostarter_web/       # Web interface
-│   ├── components/        # Reusable UI components
-│   ├── controllers/       # HTTP controllers
-│   ├── live/             # LiveView modules
-│   └── router.ex         # Route definitions
-config/                   # Application configuration
-assets/                   # Frontend assets (CSS, JS, images)
-priv/                     # Static assets and database files
-docs/                     # Background reference materials
-├── HistoryOfWork/        # Previous plans and implementations
-└── rulesforAI/           # AI development guidelines
 ```
 
 ### Ash Framework Integration
@@ -238,13 +216,6 @@ Last updated: 2025-07-25
 - Snake_case for variables and functions, PascalCase for modules
 - Document public functions with `@doc` and modules with `@moduledoc`
 
-### UI Development Rules
-- **ONLY** use components defined in `docs/rulesforAI/rules-uicomponents.md`
-- Use Tailwind utilities exclusively for spacing and layout
-- Follow the project's spacing scale (0.25rem base unit)
-- Keep UI "dumb" - no business logic in UI code
-- Never modify `app.css` or component styling classes
-- Preserve existing layouts and minimize changes
 
 ### Testing Strategy
 - Run `mix test` to execute the test suite
@@ -282,10 +253,6 @@ When completing development tasks:
 - `lib/demostarter_web/auth_controller.ex` - Authentication endpoints
 - `lib/demostarter_web/live_user_auth.ex` - LiveView authentication helpers
 
-### UI Components
-- `lib/demostarter_web/components/core_components.ex` - Reusable UI components
-- `lib/demostarter_web/components/layouts.ex` - Layout templates
-- Uses HEEx templates with `attr` and `slot` macros for component definitions
 
 ### Configuration
 - `config/config.exs` - Base configuration

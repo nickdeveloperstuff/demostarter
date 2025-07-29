@@ -16,6 +16,138 @@ This document provides a comprehensive implementation plan for Phase 2 of the LE
 
 ## 1. WIDGET IMPLEMENTATION STRATEGY
 
+### 1.0 Tailwind CSS 4.0 Theme Requirements
+
+**IMPORTANT**: Before implementing widgets, ensure all utility classes used are defined in your `@theme` block in `app.css`. The widgets below reference standard Tailwind utilities that must be defined:
+
+```css
+@theme {
+  /* Text sizes */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  
+  /* Font weights */
+  --font-weight-thin: 100;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+}
+```
+
+Then define the corresponding CSS classes:
+
+```css
+/* Text size utilities */
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-base { font-size: var(--font-size-base); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-2xl { font-size: var(--font-size-2xl); }
+.text-3xl { font-size: var(--font-size-3xl); }
+.text-4xl { font-size: var(--font-size-4xl); }
+.text-5xl { font-size: var(--font-size-5xl); }
+
+/* Font weight utilities */
+.font-thin { font-weight: var(--font-weight-thin); }
+.font-light { font-weight: var(--font-weight-light); }
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+.font-extrabold { font-weight: var(--font-weight-extrabold); }
+
+/* Flexbox utilities */
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+.flex-row-reverse { flex-direction: row-reverse; }
+.flex-col-reverse { flex-direction: column-reverse; }
+.items-start { align-items: flex-start; }
+.items-center { align-items: center; }
+.items-end { align-items: flex-end; }
+.items-stretch { align-items: stretch; }
+.items-baseline { align-items: baseline; }
+.justify-start { justify-content: flex-start; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.justify-evenly { justify-content: space-evenly; }
+
+/* Display utilities */
+.block { display: block; }
+.inline-block { display: inline-block; }
+.grid { display: grid; }
+.hidden { display: none; }
+
+/* Text alignment */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+/* Text colors */
+.text-current { color: currentColor; }
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-accent { color: var(--color-accent); }
+.text-neutral { color: var(--color-neutral); }
+.text-base-content { color: var(--color-base-content); }
+.text-success { color: var(--color-success); }
+.text-error { color: var(--color-error); }
+
+/* Cursor */
+.cursor-pointer { cursor: pointer; }
+
+/* Padding utilities (already defined with LEGO units) */
+.p-lego-1 { padding: var(--lego-unit); }
+.p-lego-2 { padding: var(--lego-unit-2); }
+.p-lego-4 { padding: var(--lego-unit-4); }
+.p-lego-6 { padding: var(--lego-unit-6); }
+.p-lego-8 { padding: var(--lego-unit-8); }
+
+/* Gap utilities (already defined with LEGO units) */
+.gap-lego-1 { gap: var(--lego-unit); }
+.gap-lego-2 { gap: var(--lego-unit-2); }
+.gap-lego-4 { gap: var(--lego-unit-4); }
+.gap-lego-6 { gap: var(--lego-unit-6); }
+.gap-lego-8 { gap: var(--lego-unit-8); }
+
+/* Width utilities */
+.w-full { width: 100%; }
+.w-4 { width: 1rem; }
+.h-4 { height: 1rem; }
+
+/* Border utilities */
+.border-t { border-top-width: 1px; }
+
+/* Overflow utilities */
+.overflow-x-auto { overflow-x: auto; }
+
+/* Margin utilities */
+.mt-auto { margin-top: auto; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+
+/* Additional padding */
+.pt-6 { padding-top: 1.5rem; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+.p-4 { padding: 1rem; }
+```
+
 ### 1.1 Core Principles
 
 Every widget must follow these principles:

@@ -39,13 +39,15 @@ The three-phase approach delivers a production-ready UI system that leverages Ph
 The system uses a **12-column CSS Grid foundation** with mathematically consistent spacing. Each column represents 8.33% of the container width, with a standard gap of 16px (4 LEGO units). Widget sizes follow Apple's constraint model:
 
 ```css
-:root {
+/* Define variables in Tailwind CSS 4.0's @theme block */
+@theme {
   --lego-unit: 4px;
   --lego-cols: 12;
   --lego-gap: calc(var(--lego-unit) * 4);
   --lego-container-max: 1200px;
 }
 
+/* CSS classes use the theme variables */
 .lego-container {
   display: grid;
   grid-template-columns: repeat(var(--lego-cols), 1fr);
@@ -169,25 +171,28 @@ cd assets && npm install && cd ..
 mix ecto.create
 ```
 
-**Configure Tailwind 4 and DaisyUI** in `assets/tailwind.config.js`:
+**Configure Tailwind CSS 4.0 and DaisyUI** in `assets/css/app.css`:
 
-```javascript
-module.exports = {
-  content: [
-    "./js/**/*.js",
-    "../lib/lego_ui_system_web/**/*.*ex",
-  ],
-  theme: {
-    extend: {
-      gridTemplateColumns: {
-        'lego-12': 'repeat(12, 1fr)',
-      }
-    }
-  },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: ["light", "dark"]
-  }
+Since Tailwind CSS 4.0 doesn't use a configuration file, all setup is done in your CSS file:
+
+```css
+/* Tailwind CSS 4.0 imports */
+@import "tailwindcss" source(none);
+@source "../css";
+@source "../js";
+@source "../../lib/lego_ui_system_web";
+
+/* DaisyUI plugin */
+@plugin "../vendor/daisyui" {
+  themes: false;
+}
+
+/* Define theme variables */
+@theme {
+  /* Grid system */
+  --grid-template-columns-lego-12: repeat(12, 1fr);
+  
+  /* Add other theme variables as needed */
 }
 ```
 
