@@ -28,6 +28,11 @@ defmodule DemostarterWeb.CoreComponents do
   """
   use Phoenix.Component
   use Gettext, backend: DemostarterWeb.Gettext
+  
+  # Import LEGO components
+  import DemostarterWeb.Components.Lego.BaseWidget
+  import DemostarterWeb.Components.Lego.Containers
+  import DemostarterWeb.Components.Lego.Layouts
 
   alias Phoenix.LiveView.JS
 
