@@ -46,6 +46,7 @@ defmodule DemostarterWeb.Router do
     live "/demo-ui-dashboard", DemoUiDashboardLive
     live "/new-demo-dashboard", NewDemoDashboardLive
     live "/test-super", TestSuperLive
+    live "/lego-demo", LegoDemoLive, :index
     auth_routes AuthController, Demostarter.Accounts.User, path: "/auth"
     sign_out_route AuthController
 
