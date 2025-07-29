@@ -30,9 +30,10 @@ defmodule DemostarterWeb.CoreComponents do
   use Gettext, backend: DemostarterWeb.Gettext
   
   # Import LEGO components
-  import DemostarterWeb.Components.Lego.BaseWidget
-  import DemostarterWeb.Components.Lego.Containers
-  import DemostarterWeb.Components.Lego.Layouts
+  # These will be imported once the components are being used
+  # import DemostarterWeb.Components.Lego.BaseWidget
+  # import DemostarterWeb.Components.Lego.Containers
+  # import DemostarterWeb.Components.Lego.Layouts
 
   alias Phoenix.LiveView.JS
 
