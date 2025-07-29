@@ -1,0 +1,1 @@
+# Text widget for typography

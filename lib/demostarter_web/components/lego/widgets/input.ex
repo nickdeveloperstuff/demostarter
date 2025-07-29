@@ -1,0 +1,1 @@
+# Input widget wrapping DaisyUI input

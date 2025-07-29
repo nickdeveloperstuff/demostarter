@@ -1,0 +1,1 @@
+# Card widget wrapping DaisyUI card
