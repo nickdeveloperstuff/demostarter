@@ -208,6 +208,67 @@ All dependencies are fully locked to their exact versions with checksums for com
 
 Last updated: 2025-07-25
 
+## LEGO UI System
+
+The project uses a constrained LEGO-style UI system that enforces design consistency through compile-time validation. **IMPORTANT: Every UI element must be a widget. No direct HTML, CSS classes, or DaisyUI components are allowed in templates.**
+
+### Key Concepts
+
+1. **Widget-Only Development**: ALL UI elements must be widgets - no exceptions
+2. **12-Column Grid**: All layouts use a 12-column CSS Grid system
+3. **Fixed Widget Sizes**: Only specific size combinations are allowed
+4. **Compile-time Validation**: Invalid sizes and non-widget usage cause compilation errors
+5. **Container Queries**: Widgets respond to their container size
+
+### Widget Sizes
+
+Only these widget sizes are allowed:
+- **1x1**: Status indicators, small metrics
+- **2x1**: Key metrics, small stats
+- **2x2**: Medium content, small charts
+- **3x1**: User info, activity cards
+- **3x2**: Lists, medium charts
+- **4x1**: Wide cards, CTAs
+- **4x2**: Large visualizations
+- **6x1**: Half-width sections
+- **6x2**: Large dashboards
+- **12x1**: Full-width banners
+- **12x2**: Full-width extended content
+
+### Development Rules
+
+1. **NO HTML elements** in templates (no `<div>`, `<button>`, etc.)
+2. **NO CSS classes** in templates (no `class="..."` at all)
+3. **NO DaisyUI components** in templates (use widget wrappers)
+4. **ONLY widgets** can be used to build UI
+5. Run `mix lego.validate` before committing
+
+### Component Usage
+
+```heex
+<!-- Phase 1 (temporary - sets up foundation) -->
+<.lego_container>
+  <.lego_widget size="2x1" title="Revenue">
+    <div>$42,000</div>  <!-- Raw HTML temporarily allowed in Phase 1 -->
+  </.lego_widget>
+</.lego_container>
+
+<!-- Phase 2 (final - everything is a widget) -->
+<.container_widget>
+  <.card_widget size="2x1" title="Revenue">
+    <.text_widget size="2xl" weight="bold">$42,000</.text_widget>
+  </.card_widget>
+</.container_widget>
+```
+
+### Validation Commands
+
+```bash
+mix lego.validate        # Check for violations
+mix lego.cleanup        # Find deprecated patterns
+mix compile            # Compile-time size validation
+```
+
 ## Development Guidelines
 
 ### Code Style

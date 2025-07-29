@@ -1,0 +1,47 @@
+defmodule CredoChecks.LegoComponentCheck do
+  @moduledoc """
+  Checks for LEGO component compliance in Phoenix templates.
+  """
+  
+  use Credo.Check,
+    base_priority: :high,
+    category: :design,
+    tags: [:lego]
+  
+  @valid_sizes ~w(1x1 2x1 2x2 3x1 3x2 4x1 4x2 6x1 6x2 12x1 12x2)
+  
+  def run(source_file, params \\ []) do
+    issue_meta = IssueMeta.for(source_file, params)
+    
+    source_file
+    |> SourceFile.source()
+    |> find_issues(issue_meta)
+  end
+  
+  defp find_issues(source, issue_meta) do
+    ~r/size=["']([^"']+)["']/
+    |> Regex.scan(source, return: :index)
+    |> Enum.flat_map(fn [{start, length}, {size_start, size_length}] ->
+      size = String.slice(source, size_start, size_length)
+      
+      if size not in @valid_sizes do
+        line_no = SourceFile.line_at(source, start)
+        column = SourceFile.column_at(source, start)
+        
+        [issue_for(issue_meta, line_no, column, size)]
+      else
+        []
+      end
+    end)
+  end
+  
+  defp issue_for(issue_meta, line_no, column, size) do
+    format_issue(
+      issue_meta,
+      message: "Invalid LEGO widget size: #{size}. Valid sizes are: #{Enum.join(@valid_sizes, ", ")}",
+      line_no: line_no,
+      column: column,
+      trigger: size
+    )
+  end
+end
