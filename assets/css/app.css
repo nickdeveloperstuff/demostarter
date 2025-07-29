@@ -1,783 +1,348 @@
-/* See the Tailwind configuration guide for advanced usage
-   https://tailwindcss.com/docs/configuration */
-
+/* Tailwind CSS 4.0 imports */
 @import "tailwindcss" source(none);
 @source "../../deps/ash_authentication_phoenix";
 @source "../css";
 @source "../js";
 @source "../../lib/demostarter_web";
 
-/* A Tailwind plugin that makes "hero-#{ICON}" classes available.
-   The heroicons installation itself is managed by your mix.exs */
-@plugin "../vendor/heroicons";
-
-/* daisyUI Tailwind Plugin. You can update this file by fetching the latest version with:
-   curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui.js
-   Make sure to look at the daisyUI changelog: https://daisyui.com/docs/changelog/ */
+/* DaisyUI plugin */
 @plugin "../vendor/daisyui" {
   themes: false;
 }
 
-/* daisyUI theme plugin. You can update this file by fetching the latest version with:
-  curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui-theme.js
-  We ship with two themes, a light one inspired on Phoenix colors and a dark one inspired
-  on Elixir colors. Build your own at: https://daisyui.com/theme-generator/ */
-@plugin "../vendor/daisyui-theme" {
-  name: "dark";
-  default: false;
-  prefersdark: true;
-  color-scheme: "dark";
-  --color-base-100: oklch(30.33% 0.016 252.42);
-  --color-base-200: oklch(25.26% 0.014 253.1);
-  --color-base-300: oklch(20.15% 0.012 254.09);
-  --color-base-content: oklch(97.807% 0.029 256.847);
-  --color-primary: oklch(58% 0.233 277.117);
-  --color-primary-content: oklch(96% 0.018 272.314);
-  --color-secondary: oklch(58% 0.233 277.117);
-  --color-secondary-content: oklch(96% 0.018 272.314);
-  --color-accent: oklch(60% 0.25 292.717);
-  --color-accent-content: oklch(96% 0.016 293.756);
-  --color-neutral: oklch(37% 0.044 257.287);
-  --color-neutral-content: oklch(98% 0.003 247.858);
-  --color-info: oklch(58% 0.158 241.966);
-  --color-info-content: oklch(97% 0.013 236.62);
-  --color-success: oklch(60% 0.118 184.704);
-  --color-success-content: oklch(98% 0.014 180.72);
-  --color-warning: oklch(66% 0.179 58.318);
-  --color-warning-content: oklch(98% 0.022 95.277);
-  --color-error: oklch(58% 0.253 17.585);
-  --color-error-content: oklch(96% 0.015 12.422);
-  --radius-selector: 0.25rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
-  --size-selector: 0.21875rem;
-  --size-field: 0.21875rem;
-  --border: 1.5px;
-  --depth: 1;
-  --noise: 0;
+/* Define theme variables in Tailwind CSS 4.0 */
+@theme {
+  /* LEGO Unit System - 4px base unit for mathematical consistency */
+  --lego-unit: 4px;
+  --lego-unit-2: calc(var(--lego-unit) * 2);   /* 8px */
+  --lego-unit-3: calc(var(--lego-unit) * 3);   /* 12px */
+  --lego-unit-4: calc(var(--lego-unit) * 4);   /* 16px */
+  --lego-unit-6: calc(var(--lego-unit) * 6);   /* 24px */
+  --lego-unit-8: calc(var(--lego-unit) * 8);   /* 32px */
+  --lego-unit-12: calc(var(--lego-unit) * 12); /* 48px */
+  --lego-unit-16: calc(var(--lego-unit) * 16); /* 64px */
+  
+  /* Grid Configuration */
+  --lego-cols: 12;
+  --lego-gap: var(--lego-unit-4);              /* 16px standard gap */
+  --lego-container-max: 1200px;
+  --lego-container-padding: var(--lego-unit-6);
+  
+  /* Widget Heights (based on rows) */
+  --lego-row-height: var(--lego-unit-16);      /* 64px base row height */
+  --lego-row-gap: var(--lego-gap);
+  
+  /* Z-index layers */
+  --lego-z-base: 0;
+  --lego-z-widget: 10;
+  --lego-z-overlay: 20;
+  --lego-z-modal: 30;
+  --lego-z-toast: 40;
+  
+  /* Transitions */
+  --lego-transition-fast: 150ms ease-in-out;
+  --lego-transition-base: 250ms ease-in-out;
+  --lego-transition-slow: 350ms ease-in-out;
+  
+  /* Shadows */
+  --lego-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --lego-shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --lego-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --lego-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Spacing values for Tailwind utilities */
+  --spacing-lego-1: var(--lego-unit);
+  --spacing-lego-2: var(--lego-unit-2);
+  --spacing-lego-3: var(--lego-unit-3);
+  --spacing-lego-4: var(--lego-unit-4);
+  --spacing-lego-6: var(--lego-unit-6);
+  --spacing-lego-8: var(--lego-unit-8);
+  --spacing-lego-12: var(--lego-unit-12);
+  --spacing-lego-16: var(--lego-unit-16);
 }
 
+/* LEGO Container and Widget Classes */
+/* Main container for the grid system */
+.lego-container {
+  display: grid;
+  grid-template-columns: repeat(var(--lego-cols), 1fr);
+  gap: var(--lego-gap);
+  max-width: var(--lego-container-max);
+  margin: 0 auto;
+  padding: var(--lego-container-padding);
+  container-type: inline-size;
+}
+
+/* Base widget styling */
+.lego-widget {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-base-100);
+  border-radius: var(--lego-unit-2);
+  box-shadow: var(--lego-shadow-base);
+  transition: box-shadow var(--lego-transition-fast);
+  position: relative;
+  z-index: var(--lego-z-widget);
+}
+
+.lego-widget:hover {
+  box-shadow: var(--lego-shadow-md);
+}
+
+/* Widget header */
+.lego-widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--lego-unit-4);
+  border-bottom: 1px solid var(--color-base-200);
+}
+
+.lego-widget-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-base-content);
+  margin: 0;
+}
+
+.lego-widget-actions {
+  display: flex;
+  gap: var(--lego-unit-2);
+}
+
+/* Widget content area */
+.lego-widget-content {
+  flex: 1;
+  padding: var(--lego-unit-4);
+  overflow: auto;
+}
+
+/* Widget footer */
+.lego-widget-footer {
+  padding: var(--lego-unit-3) var(--lego-unit-4);
+  border-top: 1px solid var(--color-base-200);
+  background: var(--color-base-50);
+}
+
+/* Widget Size Utilities */
+/* Column span utilities */
+.lego-cols-1 { grid-column: span 1; }
+.lego-cols-2 { grid-column: span 2; }
+.lego-cols-3 { grid-column: span 3; }
+.lego-cols-4 { grid-column: span 4; }
+.lego-cols-6 { grid-column: span 6; }
+.lego-cols-12 { grid-column: span 12; }
+
+/* Row span utilities with minimum heights */
+.lego-rows-1 { 
+  grid-row: span 1; 
+  min-height: var(--lego-row-height);
+}
+.lego-rows-2 { 
+  grid-row: span 2; 
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-rows-3 { 
+  grid-row: span 3; 
+  min-height: calc(var(--lego-row-height) * 3 + var(--lego-row-gap) * 2);
+}
+
+/* Combined size classes - the only allowed widget sizes */
+.lego-1x1 { 
+  grid-column: span 1;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-2x1 { 
+  grid-column: span 2;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-2x2 { 
+  grid-column: span 2;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-3x1 { 
+  grid-column: span 3;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-3x2 { 
+  grid-column: span 3;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-4x1 { 
+  grid-column: span 4;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-4x2 { 
+  grid-column: span 4;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-6x1 { 
+  grid-column: span 6;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-6x2 { 
+  grid-column: span 6;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+.lego-12x1 { 
+  grid-column: span 12;
+  grid-row: span 1;
+  min-height: var(--lego-row-height);
+}
+.lego-12x2 { 
+  grid-column: span 12;
+  grid-row: span 2;
+  min-height: calc(var(--lego-row-height) * 2 + var(--lego-row-gap));
+}
+
+/* Container Query Responsive System */
+/* Widget-level responsive adjustments using container queries */
+@container (max-width: 200px) {
+  .lego-widget {
+    --lego-padding: var(--lego-unit-2);
+  }
+  .lego-widget-title {
+    font-size: 0.75rem;
+  }
+  .lego-widget-content {
+    padding: var(--lego-padding);
+  }
+}
+
+@container (min-width: 300px) and (max-width: 400px) {
+  .lego-widget {
+    --lego-padding: var(--lego-unit-3);
+  }
+  .lego-widget-title {
+    font-size: 0.875rem;
+  }
+}
+
+@container (min-width: 400px) {
+  .lego-widget {
+    --lego-padding: var(--lego-unit-4);
+  }
+  .lego-widget-title {
+    font-size: 1rem;
+  }
+}
+
+/* System-level responsive grid collapse */
+@media (max-width: 768px) {
+  .lego-container {
+    grid-template-columns: 1fr;
+    padding: var(--lego-unit-4);
+  }
+  
+  /* Force all widgets to full width on mobile */
+  .lego-widget {
+    grid-column: span 1 !important;
+  }
+  
+  /* Adjust row heights for mobile */
+  .lego-rows-2,
+  .lego-rows-3 {
+    min-height: auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .lego-container {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  /* Adjust widget spans for tablet */
+  .lego-cols-12 { grid-column: span 6; }
+  .lego-cols-6 { grid-column: span 6; }
+  .lego-cols-4 { grid-column: span 3; }
+}
+
+/* Additional Layout Utilities */
+/* Section styling */
+.lego-section {
+  margin-bottom: var(--lego-unit-8);
+}
+
+.lego-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--lego-unit-4);
+  color: var(--color-base-content);
+}
+
+/* Main content area */
+.lego-main {
+  min-height: 100vh;
+  background: var(--color-base-50);
+  padding-top: var(--lego-unit-6);
+  padding-bottom: var(--lego-unit-12);
+}
+
+/* Spacing utilities using LEGO units */
+.lego-space-1 { margin: var(--lego-unit); }
+.lego-space-2 { margin: var(--lego-unit-2); }
+.lego-space-4 { margin: var(--lego-unit-4); }
+.lego-space-6 { margin: var(--lego-unit-6); }
+.lego-space-8 { margin: var(--lego-unit-8); }
+
+/* Padding utilities */
+.lego-pad-1 { padding: var(--lego-unit); }
+.lego-pad-2 { padding: var(--lego-unit-2); }
+.lego-pad-4 { padding: var(--lego-unit-4); }
+.lego-pad-6 { padding: var(--lego-unit-6); }
+.lego-pad-8 { padding: var(--lego-unit-8); }
+
+/* DaisyUI Theme Configuration */
 @plugin "../vendor/daisyui-theme" {
-  name: "NickFirstCustom";
+  name: "lego";
   default: true;
   prefersdark: false;
   color-scheme: "light";
-  --color-base-100: oklch(98.71% 0.02 123.72);
-  --color-base-200: oklch(91.8% 0.018 123.72);
-  --color-base-300: oklch(84.89% 0.017 123.72);
-  --color-base-content: oklch(19.742% 0.004 123.72);
-  --color-primary: oklch(58.92% 0.199 134.6);
-  --color-primary-content: oklch(11.784% 0.039 134.6);
-  --color-secondary: oklch(77.75% 0.196 111.09);
-  --color-secondary-content: oklch(15.55% 0.039 111.09);
-  --color-accent: oklch(85.39% 0.201 100.73);
-  --color-accent-content: oklch(17.078% 0.04 100.73);
-  --color-neutral: oklch(30.98% 0.075 108.6);
-  --color-neutral-content: oklch(86.196% 0.015 108.6);
-  --color-info: oklch(86.19% 0.047 224.14);
-  --color-info-content: oklch(17.238% 0.009 224.14);
-  --color-success: oklch(86.19% 0.047 157.85);
-  --color-success-content: oklch(17.238% 0.009 157.85);
-  --color-warning: oklch(86.19% 0.047 102.15);
-  --color-warning-content: oklch(17.238% 0.009 102.15);
-  --color-error: oklch(86.19% 0.047 25.85);
-  --color-error-content: oklch(17.238% 0.009 25.85);
-  --radius-selector: 0.25rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.25rem;
-  --size-selector: 0.25rem;
-  --size-field: 0.25rem;
+  --color-primary: #3B82F6;
+  --color-primary-focus: #2563EB;
+  --color-primary-content: #FFFFFF;
+  
+  --color-secondary: #8B5CF6;
+  --color-secondary-focus: #7C3AED;
+  --color-secondary-content: #FFFFFF;
+  
+  --color-accent: #10B981;
+  --color-accent-focus: #059669;
+  --color-accent-content: #FFFFFF;
+  
+  --color-neutral: #374151;
+  --color-neutral-focus: #1F2937;
+  --color-neutral-content: #FFFFFF;
+  
+  --color-base-100: #FFFFFF;
+  --color-base-200: #F3F4F6;
+  --color-base-300: #E5E7EB;
+  --color-base-content: #1F2937;
+  
+  --color-info: #3ABFF8;
+  --color-success: #36D399;
+  --color-warning: #FBBD23;
+  --color-error: #F87272;
+  
+  --radius-box: 0.5rem;
+  --radius-btn: 0.25rem;
+  --radius-badge: 0.125rem;
+  --animation-btn: 0.25s;
+  --animation-input: 0.2s;
+  --btn-text-case: none;
+  --btn-focus-scale: 0.95;
   --border: 1px;
-  --depth: 0;
-  --noise: 0;
-}
-
-/* Custom spacing scale - restricts Tailwind to only these values */
-@theme {
-  --spacing-0: 0;
-  --spacing-0_5: 0.125rem;
-  --spacing-1: 0.25rem;
-  --spacing-1_5: 0.375rem;
-  --spacing-2: 0.5rem;
-  --spacing-3: 0.75rem;
-  --spacing-4: 1rem;
-  --spacing-6: 1.5rem;
-  --spacing-8: 2rem;
-  --spacing-12: 3rem;
-  --spacing-16: 4rem;
-  
-  /* Keep existing spacing but add semantic aliases */
-  --spacing-xs: var(--spacing-1);   /* 0.25rem */
-  --spacing-sm: var(--spacing-2);   /* 0.5rem */
-  --spacing-md: var(--spacing-3);   /* 0.75rem */
-  --spacing-lg: var(--spacing-4);   /* 1rem */
-  --spacing-xl: var(--spacing-6);   /* 1.5rem */
-  --spacing-2xl: var(--spacing-8);  /* 2rem */
-  --spacing-3xl: var(--spacing-12); /* 3rem */
-  
-  /* Add typography variables */
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-sans: 'Inter', 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --font-serif: 'Merriweather', 'Playfair Display', Georgia, serif;
-  
-  /* Font sizes */
-  --font-size-xs: 0.75rem;   /* 12px */
-  --font-size-sm: 0.875rem;  /* 14px */
-  --font-size-base: 1rem;    /* 16px */
-  --font-size-lg: 1.125rem;  /* 18px */
-  --font-size-xl: 1.25rem;   /* 20px */
-  --font-size-2xl: 1.5rem;   /* 24px */
-  --font-size-3xl: 1.875rem; /* 30px */
-  --font-size-4xl: 2.25rem;  /* 36px */
-  
-  /* Shadows - Modern style only for simplicity */
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
-  
-  /* Additional component colors mapping to DaisyUI */
-  --color-background: var(--color-base-100);
-  --color-foreground: var(--color-base-content);
-  --color-card: var(--color-base-100);
-  --color-card-foreground: var(--color-base-content);
-  --color-popover: var(--color-base-100);
-  --color-popover-foreground: var(--color-base-content);
-  --color-border: var(--color-base-300);
-  --color-input: var(--color-base-200);
-  --color-ring: var(--color-primary);
-  --color-muted: var(--color-base-200);
-  --color-muted-foreground: var(--color-neutral);
-  
-  /* Chart colors */
-  --color-chart-1: var(--color-primary);
-  --color-chart-2: var(--color-secondary);
-  --color-chart-3: var(--color-accent);
-  --color-chart-4: var(--color-info);
-  --color-chart-5: var(--color-success);
-}
-
-/* Add variants based on LiveView classes */
-@custom-variant phx-click-loading (.phx-click-loading&, .phx-click-loading &);
-@custom-variant phx-submit-loading (.phx-submit-loading&, .phx-submit-loading &);
-@custom-variant phx-change-loading (.phx-change-loading&, .phx-change-loading &);
-
-/* Use the data attribute for dark mode  */
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
-/* Make LiveView wrapper divs transparent for layout */
-[data-phx-session], [data-phx-teleported-src] { display: contents }
-
-/* This file is for your main application CSS */
-
-/* =================================================================
-   AUTOMATIC LAYOUT SYSTEM
-   Prevents horizontal scrolling and enables responsive design
-   ================================================================= */
-
-/* Reset and base layout rules - applies to EVERYTHING */
-*, *::before, *::after {
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-/* Root elements configuration */
-html {
-  /* Completely prevent horizontal scrolling */
-  overflow-x: hidden;
-  overflow-y: auto;
-  
-  /* Smooth scrolling for better UX */
-  scroll-behavior: smooth;
-  
-  /* Consistent background for overscroll areas */
-  background-color: var(--color-base-100);
-  
-  /* Full height to enable proper scrolling */
-  height: 100%;
-}
-
-body {
-  /* Inherit overflow rules from html */
-  overflow-x: hidden;
-  overflow-y: auto;
-  
-  /* Remove default margins that could cause issues */
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  max-width: 100vw;
-  min-height: 100vh;
-  
-  /* Consistent background color */
-  background-color: var(--color-base-100);
-}
-
-/* Overscroll behavior for modern browsers */
-html, body {
-  /* Completely prevent horizontal overscroll */
-  overscroll-behavior-x: none;
-  
-  /* Allow vertical overscroll but contain it */
-  overscroll-behavior-y: contain;
-}
-
-/* Main content wrapper - automatically applied via root.html.heex */
-.app-scroll-container {
-  width: 100vw;
-  max-width: 100vw;
-  min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-/* For pages that want snap scrolling, wrap content in snap-container-wrapper */
-.snap-container-wrapper {
-  scroll-snap-type: y mandatory;
-  height: 100vh;
-  height: 100dvh; /* Dynamic viewport height for mobile */
-  overflow-y: auto;
-  overflow-x: hidden;
-  width: 100vw;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  overscroll-behavior-y: contain; /* Prevent pull-to-refresh interference */
-  position: relative; /* Establish positioning context */
-}
-
-/* Disable scroll on parent when snap container is active */
-.app-scroll-container:has(.snap-container-wrapper) {
-  overflow: hidden;
-  height: 100vh;
-}
-
-/* Mobile-specific snap scrolling adjustments */
-@media (hover: none) and (pointer: coarse) {
-  .snap-container-wrapper {
-    /* Use proximity on mobile for better UX */
-    scroll-snap-type: y proximity !important;
-  }
-  
-  /* Ensure snap sections work properly on mobile */
-  .snap-section {
-    /* Use dynamic viewport height on mobile */
-    height: 100vh;
-    height: 100dvh;
-    min-height: -webkit-fill-available; /* iOS fallback */
-  }
-}
-
-/* Additional mobile targeting */
-@media (max-width: 768px) {
-  .snap-container-wrapper {
-    scroll-snap-type: y proximity !important;
-  }
-}
-
-/* Make sections snap-ready (developers just need to add the class) */
-.snap-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: always; /* Force stop at each section */
-  min-height: 100vh;
-  height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Prevent common horizontal overflow causes */
-img, video, iframe, embed, object, svg, canvas {
-  max-width: 100%;
-  height: auto;
-  display: block; /* Removes inline spacing issues */
-}
-
-/* Tables need special handling for responsiveness */
-table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto; /* Allow horizontal scroll within table only */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-}
-
-/* Ensure table containers also handle overflow properly */
-.overflow-x-auto {
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Code blocks should wrap or scroll within their container */
-pre, code {
-  max-width: 100%;
-  overflow-x: auto;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-}
-
-/* Handle long unbreakable text */
-p, div, span, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  hyphens: auto;
-}
-
-/* Responsive flex/grid defaults */
-.flex {
-  flex-wrap: wrap; /* Automatically wrap flex items */
-}
-
-.grid {
-  /* Responsive grid that adjusts column count automatically */
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-}
-
-/* LiveView specific containers - maintain layout transparency */
-[data-phx-main], 
-[data-phx-session], 
-[data-phx-static],
-[data-phx-parent-id] {
-  max-width: 100vw;
-  overflow-x: hidden;
-  display: contents; /* Makes these wrappers "invisible" to layout */
-}
-
-/* Ensure all semantic HTML elements respect boundaries */
-main, article, section, aside, nav, header, footer {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-/* =================================================================
-   DESIGN SYSTEM - Animation & Enhancement Utilities
-   All visual control happens here in app.css
-   ================================================================= */
-
-/* Base transition utility */
-.transition-all {
-  transition: all 0.2s ease;
-}
-
-.transition-colors {
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.transition-transform {
-  transition: transform 0.2s ease;
-}
-
-.transition-shadow {
-  transition: box-shadow 0.2s ease;
-}
-
-/* Hover utilities */
-.hover-lift:hover {
-  transform: translateY(-1px);
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-.hover-shadow-lg:hover {
-  box-shadow: var(--shadow-lg);
-}
-
-/* Focus utilities */
-.focus-ring:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.5);
-}
-
-/* Typography utilities */
-.font-sans {
-  font-family: var(--font-sans);
-}
-
-.font-mono {
-  font-family: var(--font-mono);
-}
-
-.font-serif {
-  font-family: var(--font-serif);
-}
-
-/* Font size utilities */
-.text-xs { font-size: var(--font-size-xs); }
-.text-sm { font-size: var(--font-size-sm); }
-.text-base { font-size: var(--font-size-base); }
-.text-lg { font-size: var(--font-size-lg); }
-.text-xl { font-size: var(--font-size-xl); }
-.text-2xl { font-size: var(--font-size-2xl); }
-.text-3xl { font-size: var(--font-size-3xl); }
-.text-4xl { font-size: var(--font-size-4xl); }
-
-/* Typography hierarchy */
-h1, .h1 {
-  font-size: var(--font-size-4xl);
-  line-height: 1.2;
-  margin-top: calc(1.2 * var(--spacing-2xl));
-  margin-bottom: var(--spacing-xl);
-  font-weight: 700;
-}
-
-h2, .h2 {
-  font-size: var(--font-size-3xl);
-  line-height: 1.3;
-  margin-top: calc(1.2 * var(--spacing-xl));
-  margin-bottom: var(--spacing-lg);
-  font-weight: 600;
-}
-
-h3, .h3 {
-  font-size: var(--font-size-2xl);
-  line-height: 1.4;
-  margin-top: calc(1.2 * var(--spacing-lg));
-  margin-bottom: var(--spacing-md);
-  font-weight: 600;
-}
-
-p {
-  line-height: 1.6;
-  margin-bottom: var(--spacing-md);
-}
-
-/* Animation keyframes */
-@keyframes pulse {
-  0%, 100% { 
-    opacity: 0.4; 
-    transform: scale(0.8); 
-  }
-  50% { 
-    opacity: 1; 
-    transform: scale(1.1); 
-  }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Animation classes */
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.animate-spin {
-  animation: spin 1s linear infinite;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.35s ease-out;
-}
-
-.animate-slide-in-up {
-  animation: slideInUp 0.3s ease-out;
-}
-
-/* Shadow utilities */
-.shadow-2xs { box-shadow: var(--shadow-2xs); }
-.shadow-xs { box-shadow: var(--shadow-xs); }
-.shadow-sm { box-shadow: var(--shadow-sm); }
-.shadow { box-shadow: var(--shadow); }
-.shadow-md { box-shadow: var(--shadow-md); }
-.shadow-lg { box-shadow: var(--shadow-lg); }
-.shadow-xl { box-shadow: var(--shadow-xl); }
-.shadow-2xl { box-shadow: var(--shadow-2xl); }
-
-/* =================================================================
-   GRID SYSTEM - Square-based modular grid
-   Base unit: 8px (0.5rem) - enforces clean alignment
-   ================================================================= */
-
-/* Global grid wrapper - applied to all pages via root.html.heex */
-.app-grid-wrapper {
-  /* Base grid unit */
-  --grid-unit: 0.5rem; /* 8px */
-  
-  /* Grid columns for different breakpoints */
-  --grid-cols-mobile: 4;
-  --grid-cols-tablet: 8; 
-  --grid-cols-desktop: 12;
-  
-  /* Standard gutter */
-  --grid-gap: var(--spacing-2); /* 8px */
-  
-  /* Page padding */
-  padding: var(--spacing-4); /* 16px mobile */
-}
-
-@media (min-width: 640px) {
-  .app-grid-wrapper {
-    padding: var(--spacing-6); /* 24px tablet */
-  }
-}
-
-@media (min-width: 1024px) {
-  .app-grid-wrapper {
-    padding: var(--spacing-8); /* 32px desktop */
-  }
-}
-
-/* Grid container classes */
-.grid-page {
-  display: grid;
-  grid-template-columns: repeat(var(--grid-cols-mobile), minmax(0, 1fr));
-  gap: var(--grid-gap);
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .grid-page {
-    grid-template-columns: repeat(var(--grid-cols-tablet), minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1024px) {
-  .grid-page {
-    grid-template-columns: repeat(var(--grid-cols-desktop), minmax(0, 1fr));
-  }
-}
-
-/* Auto-responsive grid */
-.grid-auto {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(calc(var(--grid-unit) * 32), 1fr)); /* 256px min */
-  gap: var(--grid-gap);
-}
-
-/* Square-based grid with fixed aspect ratio cells */
-.grid-squares {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(calc(var(--grid-unit) * 16), 1fr)); /* 128px min */
-  grid-auto-rows: 1fr;
-  gap: var(--grid-gap);
-}
-
-.grid-squares::before {
-  content: '';
-  width: 0;
-  padding-bottom: 100%;
-  grid-row: 1 / 1;
-  grid-column: 1 / 1;
-}
-
-.grid-squares > *:first-child {
-  grid-row: 1 / 1;
-  grid-column: 1 / 1;
-}
-
-/* Grid cell utilities */
-.grid-cell {
-  /* Base cell - spans full width on mobile */
-  grid-column: span var(--grid-cols-mobile);
-}
-
-/* Responsive cell spans */
-@media (min-width: 640px) {
-  .grid-cell-half { grid-column: span calc(var(--grid-cols-tablet) / 2); }
-  .grid-cell-third { grid-column: span calc(var(--grid-cols-tablet) / 3); }
-  .grid-cell-quarter { grid-column: span calc(var(--grid-cols-tablet) / 4); }
-}
-
-@media (min-width: 1024px) {
-  .grid-cell-half { grid-column: span calc(var(--grid-cols-desktop) / 2); }
-  .grid-cell-third { grid-column: span calc(var(--grid-cols-desktop) / 3); }
-  .grid-cell-quarter { grid-column: span calc(var(--grid-cols-desktop) / 4); }
-  .grid-cell-two-thirds { grid-column: span calc(var(--grid-cols-desktop) * 2 / 3); }
-}
-
-/* Column span utilities for explicit control */
-.col-span-1 { grid-column: span 1; }
-.col-span-2 { grid-column: span 2; }
-.col-span-3 { grid-column: span 3; }
-.col-span-4 { grid-column: span 4; }
-.col-span-5 { grid-column: span 5; }
-.col-span-6 { grid-column: span 6; }
-.col-span-7 { grid-column: span 7; }
-.col-span-8 { grid-column: span 8; }
-.col-span-9 { grid-column: span 9; }
-.col-span-10 { grid-column: span 10; }
-.col-span-11 { grid-column: span 11; }
-.col-span-12 { grid-column: span 12; }
-.col-span-full { grid-column: 1 / -1; }
-
-/* Row span utilities */
-.row-span-1 { grid-row: span 1; }
-.row-span-2 { grid-row: span 2; }
-.row-span-3 { grid-row: span 3; }
-.row-span-4 { grid-row: span 4; }
-
-/* Grid gap variants */
-.gap-0 { gap: 0; }
-.gap-1 { gap: var(--spacing-1); } /* 4px */
-.gap-2 { gap: var(--spacing-2); } /* 8px */
-.gap-3 { gap: var(--spacing-3); } /* 12px */
-.gap-4 { gap: var(--spacing-4); } /* 16px */
-.gap-6 { gap: var(--spacing-6); } /* 24px */
-.gap-8 { gap: var(--spacing-8); } /* 32px */
-
-/* =================================================================
-   ALIGNMENT & CENTERING UTILITIES
-   For consistent icon and content alignment within grid
-   ================================================================= */
-
-/* Flex centering utilities */
-.center-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.center-vertical {
-  display: flex;
-  align-items: center;
-}
-
-.center-horizontal {
-  display: flex;
-  justify-content: center;
-}
-
-/* Icon alignment patterns */
-.icon-cell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 1;
-  min-height: calc(var(--grid-unit) * 6); /* 48px touch target */
-}
-
-.icon-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-1);
-  text-align: center;
-}
-
-.icon-label-horizontal {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-}
-
-/* Icon sizing constrained to grid units */
-.icon-xs { width: calc(var(--grid-unit) * 2); height: calc(var(--grid-unit) * 2); } /* 16px */
-.icon-sm { width: calc(var(--grid-unit) * 2.5); height: calc(var(--grid-unit) * 2.5); } /* 20px */
-.icon-md { width: calc(var(--grid-unit) * 3); height: calc(var(--grid-unit) * 3); } /* 24px */
-.icon-lg { width: calc(var(--grid-unit) * 4); height: calc(var(--grid-unit) * 4); } /* 32px */
-.icon-xl { width: calc(var(--grid-unit) * 6); height: calc(var(--grid-unit) * 6); } /* 48px */
-
-/* Ensure icons maintain size */
-.icon-xs svg, .icon-sm svg, .icon-md svg, .icon-lg svg, .icon-xl svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* =================================================================
-   GRID-AWARE SPACING UTILITIES
-   Reinforce grid alignment with consistent padding/margin
-   ================================================================= */
-
-/* Padding constrained to grid units */
-.p-grid-1 { padding: var(--grid-unit); } /* 8px */
-.p-grid-2 { padding: calc(var(--grid-unit) * 2); } /* 16px */
-.p-grid-3 { padding: calc(var(--grid-unit) * 3); } /* 24px */
-.p-grid-4 { padding: calc(var(--grid-unit) * 4); } /* 32px */
-
-/* Section spacing */
-.section-spacing {
-  padding-top: var(--spacing-8);
-  padding-bottom: var(--spacing-8);
-}
-
-@media (min-width: 640px) {
-  .section-spacing {
-    padding-top: var(--spacing-12);
-    padding-bottom: var(--spacing-12);
-  }
-}
-
-/* =================================================================
-   DEBUG GRID OVERLAY
-   Add class="grid-debug" to body to visualize grid
-   ================================================================= */
-
-.grid-debug {
-  position: relative;
-}
-
-.grid-debug::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    repeating-linear-gradient(
-      to right,
-      rgba(255, 0, 0, 0.1) 0px,
-      rgba(255, 0, 0, 0.1) 1px,
-      transparent 1px,
-      transparent var(--grid-unit)
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(255, 0, 0, 0.1) 0px,
-      rgba(255, 0, 0, 0.1) 1px,
-      transparent 1px,
-      transparent var(--grid-unit)
-    );
-  pointer-events: none;
-  z-index: 9999;
-}
-
-/* Column guides for debugging */
-.grid-debug .grid-page::before,
-.grid-debug .grid-auto::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: repeating-linear-gradient(
-    to right,
-    rgba(0, 0, 255, 0.1) 0,
-    rgba(0, 0, 255, 0.1) calc((100% - var(--grid-gap) * (var(--grid-cols-desktop) - 1)) / var(--grid-cols-desktop)),
-    transparent calc((100% - var(--grid-gap) * (var(--grid-cols-desktop) - 1)) / var(--grid-cols-desktop)),
-    transparent calc((100% - var(--grid-gap) * (var(--grid-cols-desktop) - 1)) / var(--grid-cols-desktop) + var(--grid-gap))
-  );
-  pointer-events: none;
-  z-index: 9998;
+  --tab-border: 1px;
+  --tab-radius: 0.25rem;
 }
