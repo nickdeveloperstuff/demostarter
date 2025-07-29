@@ -304,45 +304,45 @@
 .lego-pad-8 { padding: var(--lego-unit-8); }
 
 /* DaisyUI Theme Configuration */
-@plugin "../vendor/daisyui-theme" {
+@plugin "../vendor/daisyui-theme.js" {
   name: "lego";
   default: true;
   prefersdark: false;
   color-scheme: "light";
-  --color-primary: #3B82F6;
-  --color-primary-focus: #2563EB;
-  --color-primary-content: #FFFFFF;
+  --color-primary: "#3B82F6";
+  --color-primary-focus: "#2563EB";
+  --color-primary-content: "#FFFFFF";
   
-  --color-secondary: #8B5CF6;
-  --color-secondary-focus: #7C3AED;
-  --color-secondary-content: #FFFFFF;
+  --color-secondary: "#8B5CF6";
+  --color-secondary-focus: "#7C3AED";
+  --color-secondary-content: "#FFFFFF";
   
-  --color-accent: #10B981;
-  --color-accent-focus: #059669;
-  --color-accent-content: #FFFFFF;
+  --color-accent: "#10B981";
+  --color-accent-focus: "#059669";
+  --color-accent-content: "#FFFFFF";
   
-  --color-neutral: #374151;
-  --color-neutral-focus: #1F2937;
-  --color-neutral-content: #FFFFFF;
+  --color-neutral: "#374151";
+  --color-neutral-focus: "#1F2937";
+  --color-neutral-content: "#FFFFFF";
   
-  --color-base-100: #FFFFFF;
-  --color-base-200: #F3F4F6;
-  --color-base-300: #E5E7EB;
-  --color-base-content: #1F2937;
+  --color-base-100: "#FFFFFF";
+  --color-base-200: "#F3F4F6";
+  --color-base-300: "#E5E7EB";
+  --color-base-content: "#1F2937";
   
-  --color-info: #3ABFF8;
-  --color-success: #36D399;
-  --color-warning: #FBBD23;
-  --color-error: #F87272;
+  --color-info: "#3ABFF8";
+  --color-success: "#36D399";
+  --color-warning: "#FBBD23";
+  --color-error: "#F87272";
   
-  --radius-box: 0.5rem;
-  --radius-btn: 0.25rem;
-  --radius-badge: 0.125rem;
-  --animation-btn: 0.25s;
-  --animation-input: 0.2s;
-  --btn-text-case: none;
-  --btn-focus-scale: 0.95;
-  --border: 1px;
-  --tab-border: 1px;
-  --tab-radius: 0.25rem;
+  --radius-box: "0.5rem";
+  --radius-btn: "0.25rem";
+  --radius-badge: "0.125rem";
+  --animation-btn: "0.25s";
+  --animation-input: "0.2s";
+  --btn-text-case: "none";
+  --btn-focus-scale: "0.95";
+  --border: "1px";
+  --tab-border: "1px";
+  --tab-radius: "0.25rem";
 }
